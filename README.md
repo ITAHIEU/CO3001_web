@@ -15,9 +15,15 @@ vice Officer (SPSO), who oversees printer management, system configurations, and
 Authentication for all users is handled through the university’s single sign-on (HCMUT_SSO)
 system, ensuring secure access.
 
-#Technology stack
+# Technology stack
 - Front_end: reactjs ??
 - Back_end: nodejs ??
 - Database: SQL || mySQL ??
+
+# Drawback
+- No authorization between students and SPSOs
+- Payment methods not integrated
+
+# How to install ?
 
 
