@@ -25,5 +25,7 @@ system, ensuring secure access.
 - Payment methods not integrated
 
 # How to install ?
-
+To use the application, you can follow the following steps:
+# Clone the repository
+Open a terminal at a directory of your choice and enter these commands (change the folder name if you want to):
 
