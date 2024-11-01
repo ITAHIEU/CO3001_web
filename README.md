@@ -37,8 +37,10 @@ cd HCMUT_SSPS
 Inside CNPM_HCMUT_SSPS folder, you will see several subfolders: client, server, etc.
 
 ## Install dependencies
-First, you need to have NodeJS. If you haven't installed before, please visit https://nodejs.org/ and dowload it.
-Next, you have to install all the dependencies of our project. Let's go to the "server" directory first and enter these command:
+First, you need to have NodeJS. If you haven't installed before, please visit [Node.js](https://nodejs.org/) and download it.
+
+Next, you have to install all the dependencies of our project. Let's go to the "server" directory first and enter these commands:
+
 
 ```bash
 cd server
