@@ -29,6 +29,7 @@ To use the application, you can follow the following steps:
 ## Clone the repository
 Open a terminal at a directory of your choice and enter these commands (change the folder name if you want to):
 
-```git clone https://github.com/ITAHIEU/CO3001_web.git```
-```cd HCMUT_SSPS```
+```bash
+git clone https://github.com/ITAHIEU/CO3001_web.git
+cd HCMUT_SSPS
 
