@@ -32,4 +32,21 @@ Open a terminal at a directory of your choice and enter these commands (change t
 ```bash
 git clone https://github.com/ITAHIEU/CO3001_web.git
 cd HCMUT_SSPS
+```
 
+Inside CNPM_HCMUT_SSPS folder, you will see several subfolders: client, server, etc.
+
+## Install dependencies
+First, you need to have NodeJS. If you haven't installed before, please visit https://nodejs.org/ and dowload it.
+Next, you have to install all the dependencies of our project. Let's go to the "server" directory first and enter these command:
+
+```bash
+cd server
+npm install
+```
+
+Then, go to the "client" directory and do the same thing by entering these commands:
+```bash
+cd client
+npm install
+```
