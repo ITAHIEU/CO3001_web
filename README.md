@@ -1,1 +1,17 @@
 # Giới thiệu hệ thống HCMUT - SPSS
+
+![Giao diện chính hệ thống](images/gd1.png)
+
+# Overview
+The HCMUT Smart Printing Service (HCMUT-SSPS) is a system designed to offer students
+a more convenient, efficient, and accessible way to print their academic documents across various
+campuses of Ho Chi Minh University of Technology (HCMUT). This service involves multiple
+printers placed strategically in different buildings and rooms across campuses, allowing students
+to upload their documents digitally, configure print settings, and select a suitable printer. Key
+features include the ability to manage paper size, print double-sided, and determine the number
+of copies. Additionally, the system is integrated with online payment services, such as BKPay,
+and tracks students’ print quotas. The system is closely regulated by a Student Printing Ser-
+vice Officer (SPSO), who oversees printer management, system configurations, and log tracking.
+Authentication for all users is handled through the university’s single sign-on (HCMUT_SSO)
+system, ensuring secure access.
+
