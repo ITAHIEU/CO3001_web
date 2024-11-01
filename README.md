@@ -52,3 +52,7 @@ Then, go to the "client" directory and do the same thing by entering these comma
 cd client
 npm install
 ```
+You have installed all the dependencies.
+
+# Set up a database server
+The application will also need a MySQL server for the backend to connect to the database
