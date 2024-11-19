@@ -2,13 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-
+import MainPage from './pages/MainPage/mainPage.jsx';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <MainPage/>
   </React.StrictMode>
 );
 
