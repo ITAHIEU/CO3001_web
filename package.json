@@ -1,6 +1,19 @@
 {
-  "dependencies": {
-    "express": "^4.21.1",
-    "mysql2": "^3.11.4"
+  "name": "hcmut_ssps",
+  "version": "1.0.0",
+  "description": "Welcome to our HCMUT_SSPS - A smart printing service for HCMUT students",
+  "scripts": {
+    "server": "cd server && npm start",
+    "client": "cd client && npm start",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server-dev": "cd server && npm run dev",
+    "dev": "concurrently \"npm run server-dev\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "concurrently": "^8.2.2"
   }
 }
