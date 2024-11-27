@@ -1,0 +1,14 @@
+.LoginButton{
+    padding: 10px 20px;
+    border: 1px solid #2951C9 ;
+    color: black;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 95px;
+    transition: transform 0.2s linear;
+}
+.LoginButton:hover{
+    transform: translateY(-5px);
+    background-color: #2951C9 ;
+    color: white;
+}
