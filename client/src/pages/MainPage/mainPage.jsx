@@ -3,7 +3,8 @@ import styles from "./mainPage.module.css"
 import background from "../../assets/mp7.png"
 import Header from "../../components/HeaderBar/Header";
 import Footer from "../../components/FooterBar/Footer";
-const MainPage = () => {
+
+const HomePage = () => {
     return (
         <div className={styles.container}>
             <img src={background} alt="Background" className={styles.background_img} />
@@ -15,4 +16,4 @@ const MainPage = () => {
         </div>
     );
 };
-export default MainPage;
+export default HomePage;

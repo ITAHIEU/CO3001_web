@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "username": "Con lon beo",
+        "sex": "Nam",
+        "phone": "07xxxxxxx1",
+        "birth": "dd/mm/yyyy",
+        "position": "Sinh viên",
+        "falcuty": "Máy tính",
+        "mail": "abc@hcmut.edu.vn",
+        "pages": "100",
+        "money": "10000đ",
+        "order": [{
+            "id": 1,
+            "tax": "12121212",
+            "date": "12/12/2024",
+            "type": "A4",
+            "pages": "2",
+            "amount": "1000đ",
+            "status": "Đã hoàn thành" 
+        },{
+            "tax": "12121212",
+            "date": "12/12/2024",
+            "type": "A4",
+            "pages": "2",
+            "amount": "1000đ",
+            "status": "Chưa hoàn thành" 
+        },
+        {
+            "tax": "12121212",
+            "date": "12/12/2024",
+            "type": "A4",
+            "pages": "2",
+            "amount": "1000đ",
+            "status": "Chưa hoàn thành" 
+        }]
+    }
+]

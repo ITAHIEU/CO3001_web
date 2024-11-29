@@ -1,0 +1,143 @@
+
+.infoContainer{
+    display: flex;
+    justify-content: center;
+    padding-top: 5%;
+    align-content: center;
+    background-color: #e8e8e8;
+    height: 90vh;
+}
+.info{
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    font-size: 30px;
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 15px;
+    padding: 5px;
+}
+.info span{
+    padding: 0;
+    margin: 0;
+    font-size: 60px;
+}
+.info ul{
+    padding: 0;
+    margin: 0;
+}
+.text{
+    list-style: none;
+}
+.history{
+    display: block;
+    padding-left: 50px;
+
+}
+.bar{
+    position: flex;
+    border: 2px solid #fff;
+    background-color: #fff;
+    font-size: 20px;
+    width: 75vw;
+}
+.bar ul{
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+.bar li{
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.link{
+    text-decoration: none;
+    color: #fff;
+}
+.content{
+    margin-top: 20px;
+    border: 1px solid #fff;
+    /* border-radius: 8px; */
+    overflow: hidden;
+}
+
+.orderTable{
+    width: 75vw;
+    border-collapse: collapse;
+    text-align: left;
+    border: 2px solid #fff;
+}
+.orderTable th,
+.orderTable td {
+  padding: 10px;
+}
+
+.orderTable th {
+  background-color: #fff;
+  font-weight: bold;
+  border-bottom: 1px solid #a8a8a8; 
+}
+.orderTable tr{
+  background-color: #fff;
+  border-bottom: 1px solid #a8a8a8;
+}
+.orderTable tr:last-child td {
+  border-bottom: none;
+}
+.dropdown_container{
+    position: absolute;
+    background-color: #a8a8aa;
+    color: #fff;
+    font-size: 20px;
+    right: 1.5%;
+    top: 7%;
+    border-radius: 2%;
+    width: 200px; 
+    z-index: 1000;
+}
+.dropdown_contents{
+    display: grid;
+    justify-content: left;
+    align-items: center;
+    list-style: none;
+    padding: 0px;
+    margin: 0;
+}
+.dropdown_contents li{
+    cursor: pointer;
+    padding: 10px;
+    width: 180px;
+}
+.dropdown_contents li:hover{
+    background-color: black;
+}
+@media (max-height: 1200px) and (min-width: 900px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 7.5%; 
+    }
+
+}
+@media (max-height: 1200px) and (min-width: 1200px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 7.5%; 
+    }
+
+}
+@media (max-height: 800px) and (min-width: 700px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 9%;
+    }
+
+}
+@media (max-height: 800px) and (min-width: 900px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 9%;
+    }
+
+}

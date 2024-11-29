@@ -1,0 +1,237 @@
+.container{
+    display: flex;
+    background-color: #e8e8e8;
+
+}
+.back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.print_box{
+    display: block;
+    margin-left: 5vw;
+    width: 90vw;
+    height: 70vh;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background-color: white;
+}
+.dragbox{
+    display: block;
+    padding: 10px;
+    max-height: fit-content;
+}
+.option {
+    display: flex;
+    font-size: 15px;
+    justify-content: space-around;
+    width: 60vw;
+    margin: 0 auto; 
+    text-align: center; 
+    padding: 30px;
+    /* line-height: 1.5;  */
+}
+.content{
+    display: flex;
+    border: 2px solid #fff;
+    width: 40vw;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.037);
+    font-size: 18px;
+    justify-content: space-between;
+    align-content: space-between;
+}
+.left{
+    display: block;
+    width: fit-content;
+    text-align: left;
+    padding: 15px;
+}
+button{
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+button img{
+    width: 100px;
+    height: 100px;
+}
+button:hover{
+    background-color: #a8a8aa;
+}
+.right{
+    display: block;
+    width: fit-content;
+    text-align: left;
+    padding: 15px;
+}
+.success_card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 25vw;
+    height: 40vh;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+}
+.popCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 6vh auto 0 auto;
+    width: fit-content;
+    height: 20vh;
+    /* border: 2px solid #000; */
+    font-size: 40px;
+    padding: 20px; 
+    text-align: center; 
+}
+
+.popCard span {
+    font-size: 100px;
+    color: green;
+    margin: 0;
+}
+
+.popCard p {
+    margin: 0;
+}
+
+.popCard button {
+    font-size: 30px;
+    margin: 20px 0 0 0; 
+    padding: 10px 20px; 
+}
+.popCard button Link{
+    text-decoration: none;
+}
+.success_card.show {
+    opacity: 1;
+    visibility: visible;
+}
+.dropdown_container{
+    position: absolute;
+    background-color: #a8a8aa;
+    color: #fff;
+    font-size: 20px;
+    right: 1.5%;
+    top: 7%;
+    border-radius: 2%;
+    width: 200px;
+    z-index: 1000;
+}
+.dropdown_contents{
+    display: grid;
+    justify-content: left;
+    align-items: center;
+    list-style: none;
+    padding: 0px;
+    margin: 0;
+}
+.dropdown_contents li{
+    cursor: pointer;
+    padding: 10px;
+    width: 180px;
+}
+.link{
+    text-decoration: none;
+    color: #fff;
+}
+.dropdown_contents li:hover{
+    background-color: black;
+}
+@media (max-height: 1200px) and (min-width: 900px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 7.5%; 
+    }
+    .option{
+        display: block;
+    }
+    .option button{
+        margin-top: 30px;
+    }
+    .content{
+        margin: 0 auto;
+        height: fit-content;
+        width: fit-content;
+    }
+    .success_card{
+        width: 50vw;
+    }
+}
+@media (max-height: 1200px) and (min-width: 1200px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 7.5%; 
+    }
+    .option{
+        display: block;
+    }
+    .option button{
+        margin-top: 30px;
+    }
+    .content{
+        margin: 0 auto;
+        height: fit-content;
+        width: 60%;
+    }
+}
+@media (max-height: 800px) and (min-width: 700px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 9%;
+    }
+    .option{
+        display: flex;
+        margin: 0 auto;
+    }
+    .option button{
+        margin-top: 0;
+        margin-left: 10px;
+    }
+    .content{
+        margin: 0;
+        font-size: 14px;
+        height: fit-content;
+        width: fit-content;
+    }
+    .success_card{
+        width: 50vw;
+    }
+    .popCard{
+        font-size: 30px;
+    }
+
+}
+@media (max-height: 800px) and (min-width: 900px){
+    .dropdown_container {
+        right: 1.5%; 
+        top: 9%;
+    }
+    .option{
+        display: flex;
+        margin: 0 auto;
+    }
+    .option button{
+        margin: 0px;
+    }
+    .content{
+        margin: 0;
+        font-size: 20px;
+        height: fit-content;
+        width: fit-content;
+    }
+}

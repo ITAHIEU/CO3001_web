@@ -1,6 +1,7 @@
 import React  from "react";
 import styles from "./Header.module.css"
 import logo from "../../assets/hcmut.png"
+import { Link } from "react-router-dom";
 
 const Header = () =>{
     return (
@@ -17,7 +18,7 @@ const Header = () =>{
                     <li className={styles.rightItem}>
                         <a href="#"><span class="material-symbols-outlined">language</span> Tiếng việt (vi) <span class="material-symbols-outlined">keyboard_arrow_down</span></a>
                     </li>
-                    <li className={`${styles.rightItem} ${styles.login}`}><a href="#">Đăng nhập</a></li>
+                    <li className={`${styles.rightItem} ${styles.login}`}><Link to="/mainPage">Đăng nhập</Link></li>
                 </ul>
             </nav>
         </header>
