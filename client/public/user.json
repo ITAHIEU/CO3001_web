@@ -33,6 +33,17 @@
             "pages": "2",
             "amount": "1000đ",
             "status": "Chưa hoàn thành" 
+        }],
+        "recharge":[{
+            "id": "1",
+            "date": "11/11/2024",
+            "method":"Nạp tiền qua momo",
+            "action": "+20000đ"
+        },{
+            "id": "2",
+            "date":"12/12/2024",
+            "method":"In tài liệu",
+            "action": "-10000đ"
         }]
     }
 ]

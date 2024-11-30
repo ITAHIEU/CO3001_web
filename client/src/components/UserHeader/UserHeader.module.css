@@ -1,15 +1,27 @@
 body{
     font-family: 'Material Icons Outlined', sans-serif;
 }
+.menuButton {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+.mobileMenu{
+    display: none;
+}
 .header {
     display: flex;
     background-color: #a8a8a8;
     color: #ffffff;
-    position: absolute;
+    position: fixed;
     width: 100%;
-    opacity: 80%;
+    opacity: 100%;
+    min-height: 50px;
     top: 0;
-    z-index: 10;
+    z-index: 1004;
 }
 .logoContainer{
     display: flex;
@@ -102,4 +114,47 @@ body{
 }
 .login:hover a{
     text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .leftItem {
+        display: none;
+    }
+    .logoContainer{
+        padding-left: 5px;
+    }
+    .menuButton {
+        display: block; 
+    }
+
+    .mobileMenu {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        background-color: #a8a8a8;
+        width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow: hidden;
+        opacity: 0;
+        height: 0; 
+        transition: height 0.1s linear, opacity 0.1s linear; 
+    }
+
+    .mobileMenu.show {
+        opacity: 1;
+        height: auto; /* Expand to the natural height */
+    }
+
+    .mobileMenu a {
+        text-decoration: none;
+        color: white;
+        padding: 10px;
+        transition: background-color 0.1s linear;
+    }
+
+    .mobileMenu a:hover {
+        background-color: #555;
+    }
 }

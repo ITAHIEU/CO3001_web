@@ -33,19 +33,11 @@ const SelectBox = ({ options = [], holder, onChange }) => {
   );
 };
 
-const PrintPage = () => {
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
+const PrintPage = ({clickOutside}) => {
   const [showSuccessCard, setShowSuccessCard] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [printAll, setPrintAll] = useState(true);
   const [username, setUsername] = useState(null);
-  const toggleDropdown = () => {
-    setDropdownVisible(true);
-  };
-
-  const clickOutside = () => {
-    if (isDropdownVisible) setDropdownVisible(false);
-  };
 
   const handleFileUpload = (filePath) => {
     setErrorMessage(null); 
@@ -71,16 +63,6 @@ const PrintPage = () => {
   }, []);
   return (
     <div onClick={clickOutside} className={styles.container}>
-      <UserHeader activeIndex={1} onToggleDropdown={toggleDropdown} />
-      {isDropdownVisible && (
-        <div className={styles.dropdown_container}>
-          <ul className={styles.dropdown_contents}>
-            <Link to="/profile-page" className={styles.link}><li>Hồ sơ</li></Link>
-            <li>Nạp tiền </li>
-            <Link to="/" className={styles.link}><li>Đăng xuất</li></Link>
-          </ul>
-        </div>
-      )}
       <div className={styles.back}>
         <div className={styles.print_box}>
           <DragBox onFileUpload={handleFileUpload} />
@@ -107,6 +89,7 @@ const PrintPage = () => {
             </div>
             <button onClick={() => setShowSuccessCard(true)} ><img src={print} alt=''></img></button>
           </div>
+          <div className={`${styles.overlay} ${showSuccessCard ? styles.show : ''}`} onClick={() => setShowSuccessCard(false)}></div>
           <div className={`${styles.success_card} ${showSuccessCard ? styles.show : ''}`}>
             <div className={styles.popCard}>
               <span class="material-symbols-outlined">check_circle</span>
@@ -116,7 +99,6 @@ const PrintPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

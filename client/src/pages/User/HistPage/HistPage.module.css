@@ -1,70 +1,76 @@
-
-.infoContainer{
+.infoContainer {
     display: flex;
-    justify-content: center;
-    padding-top: 5%;
-    align-content: center;
-    background-color: #e8e8e8;
-    height: 90vh;
+    /* border: 1px solid lightgrey; */
+    border-radius: 8px;
+    padding: 20px;
+    max-height: calc(100vh - 60px);
+    min-width: fit-content;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    /* box-shadow: 8px 4px 8px rgba(0, 0, 0, 0.105); */
+    margin: 100px auto;
+    gap: 20px; 
 }
-.info{
+
+.info {
     display: flex;
+    flex-shrink: 0;
     width: fit-content;
     height: fit-content;
-    font-size: 30px;
+    font-size: 20px;
     background-color: #fff;
     border: 2px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
-    padding: 5px;
+    /* padding: 5px; */
 }
 .info span{
-    padding: 0;
-    margin: 0;
-    font-size: 60px;
+    font-size: 50px;
+    margin: auto 0;
 }
 .info ul{
-    padding: 0;
-    margin: 0;
-}
-.text{
     list-style: none;
+    padding: 0;
 }
-.history{
-    display: block;
-    padding-left: 50px;
+.history {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-}
-.bar{
-    position: flex;
+.bar {
+    display: flex;
     border: 2px solid #fff;
     background-color: #fff;
     font-size: 20px;
-    width: 75vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    padding: 10px;
 }
-.bar ul{
+
+.bar ul {
     display: flex;
     list-style: none;
     padding: 0;
-}
-.bar li{
-    padding-left: 20px;
-    padding-right: 20px;
-    cursor: pointer;
+    margin: 0;
+    gap: 20px; /* Khoảng cách giữa các mục trong bar */
 }
 
-.link{
-    text-decoration: none;
-    color: #fff;
+.bar li {
+    cursor: pointer;
+    
 }
-.content{
+
+.content {
     margin-top: 20px;
+    flex-grow: 1;
     border: 1px solid #fff;
-    /* border-radius: 8px; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-.orderTable{
-    width: 75vw;
+.orderTable {
+    width: 100%;
     border-collapse: collapse;
     text-align: left;
     border: 2px solid #fff;
@@ -86,58 +92,28 @@
 .orderTable tr:last-child td {
   border-bottom: none;
 }
-.dropdown_container{
-    position: absolute;
-    background-color: #a8a8aa;
-    color: #fff;
-    font-size: 20px;
-    right: 1.5%;
-    top: 7%;
-    border-radius: 2%;
-    width: 200px; 
-    z-index: 1000;
-}
-.dropdown_contents{
-    display: grid;
-    justify-content: left;
-    align-items: center;
-    list-style: none;
-    padding: 0px;
-    margin: 0;
-}
-.dropdown_contents li{
-    cursor: pointer;
-    padding: 10px;
-    width: 180px;
-}
-.dropdown_contents li:hover{
-    background-color: black;
-}
-@media (max-height: 1200px) and (min-width: 900px){
-    .dropdown_container {
-        right: 1.5%; 
-        top: 7.5%; 
+@media (max-width: 600px) {
+    .infoContainer{
+        display: block;
+        margin-top: 12%;
     }
+    .info{
+        margin-bottom: 10px;
+    }
+}
+@media (min-width: 600px) and (max-width: 768px) {
+    .infoContainer{
+        display: block;
+    }
+    .info{
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
 
 }
-@media (max-height: 1200px) and (min-width: 1200px){
-    .dropdown_container {
-        right: 1.5%; 
-        top: 7.5%; 
-    }
 
-}
-@media (max-height: 800px) and (min-width: 700px){
-    .dropdown_container {
-        right: 1.5%; 
-        top: 9%;
-    }
-
-}
-@media (max-height: 800px) and (min-width: 900px){
-    .dropdown_container {
-        right: 1.5%; 
-        top: 9%;
-    }
+@media (min-width: 1200px) {
 
 }

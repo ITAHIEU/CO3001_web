@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./HistPage.module.css";
-import UserHeader from "../../../components/UserHeader/UserHeader";
-import Footer from "../../../components/FooterBar/Footer";
 import { Link } from "react-router-dom";
 const HistPage = () => {
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [username, setUsername] = useState(null);
   const [order, setOrder] = useState([]); // Initialize order as an empty array
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!isDropdownVisible); // Toggle dropdown visibility
-  };
-
-  const clickOutside = () => {
-    if (isDropdownVisible) setDropdownVisible(false);
-  };
-
+  const [state, setState] = useState("");
   useEffect(() => {
     fetch("/user.json")
       .then((response) => response.json())
@@ -29,17 +18,7 @@ const HistPage = () => {
   }, []);
 
   return (
-    <div onClick={clickOutside}>
-    <UserHeader onToggleDropdown={toggleDropdown} activeIndex={2} />
-      {isDropdownVisible && (
-        <div className={styles.dropdown_container}>
-          <ul className={styles.dropdown_contents}>
-            <Link to="/profile-page" className={styles.link}><li>Hồ sơ</li></Link>
-            <li>Nạp tiền </li>
-            <Link to="/" className={styles.link}><li>Đăng xuất</li></Link>
-          </ul>
-        </div>
-      )}
+    <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.info}>
           <span className="material-symbols-outlined">account_circle</span>
@@ -51,9 +30,9 @@ const HistPage = () => {
         <div className={styles.history}>
           <div className={styles.bar}>
             <ul>
-              <li>Tất cả</li>
-              <li>Chưa hoàn thành</li>
-              <li>Hoàn thành</li>
+              <li onClick={() => setState("")}>Tất cả</li>
+              <li onClick={() => setState("Chưa hoàn thành")}>Chưa hoàn thành</li>
+              <li onClick={() => setState("Đã hoàn thành")}>Hoàn thành</li>
             </ul>
           </div>
           <div className={styles.content}>
@@ -70,7 +49,7 @@ const HistPage = () => {
               </thead>
               <tbody>
                 {order.length > 0 ? ( 
-                  order.map((user) => (
+                  order.map((user) => ( (state === user.status || state === "") &&
                     <tr key={user.id}>
                       <td>{user.tax}</td>
                       <td>{user.date}</td>
@@ -98,7 +77,6 @@ const HistPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

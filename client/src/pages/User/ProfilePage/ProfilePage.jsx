@@ -5,6 +5,7 @@ import Footer from "../../../components/FooterBar/Footer";
 import { Link } from "react-router-dom"
 const Profile = () => {
     const [user, setUsername] = useState(null);
+    const [showSuccessCard, setShowSuccessCard] = useState(false);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const toggleDropdown = () =>{
         setDropdownVisible(true);
@@ -25,14 +26,6 @@ const Profile = () => {
       }, []);
     return (
         <div className={styles.container} onClick={clickOutside}>
-            <UserHeader activeIndex={3} onToggleDropdown={toggleDropdown}/>
-            {isDropdownVisible && <div className={styles.dropdown_container}>
-                <ul className={styles.dropdown_contents}>
-                    <Link to="/profile-page" className={styles.link}><li>Hồ sơ</li></Link>
-                    <li>Nạp tiền </li>
-                    <Link to="/" className={styles.link}><li>Đăng xuất</li></Link>
-                </ul>
-            </div>}
             <div className={styles.infoContainer}>
                 <div className={styles.info}>
                     <span className="material-symbols-outlined">account_circle</span>
@@ -86,12 +79,49 @@ const Profile = () => {
                                     <span><b>{user.money}</b></span>
                                 </div>
                                 <button>Nạp tiền</button>
+                                <a onClick={() => setShowSuccessCard(true)} style={{cursor: "pointer"}}><b>Lịch sử giao dịch</b></a>
                             </div>
                         )}
                     </div>
+                    <div className={`${styles.overlay} ${showSuccessCard ? styles.show : ''}`} onClick={() => setShowSuccessCard(false)}></div>
+                    <div className={`${styles.success_card} ${showSuccessCard ? styles.show : ''}`}>
+                        <div className={styles.popCard}>
+                            <div className={styles.title} ><h2>Lịch sử giao dịch</h2></div>
+                            <div className={styles.content_box}>
+                                <table className={styles.orderTable}>
+                                <thead>
+                                    <tr>
+                                    <th>STT</th>
+                                    <th>Thời gian</th>
+                                    <th>Phương thức</th>
+                                    <th>Số tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {user && (user.order ? ( 
+                                    user.recharge.map((user) => (
+                                        <tr key={user.id}>
+                                        <td>{user.id}</td>
+                                        <td>{user.date}</td>
+                                        <td>{user.method}</td>
+                                        <td>{user.action}</td>
+                                        </tr>
+                                    ))
+                                    ) : (
+                                    <tr>
+                                        <td colSpan="6" className={styles.noOrders}>
+                                        Không có đơn hàng nào
+                                        </td>
+                                    </tr>
+                                    ))}
+                                </tbody>
+                                </table>
+                            </div>
+                            <button onClick={() => {setShowSuccessCard(false); window.location.reload();}}>Close</button>  
+                        </div>
+                    </div>
                 </div>
             </div>
-            <Footer/>
         </div>
     )
 }
