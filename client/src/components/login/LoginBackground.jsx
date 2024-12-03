@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoginBackground.css';
+import './LoginBackground.module.css';
 
 const LoginBackground = ({ children }) => {
   return <div className="Login_background">{children}</div>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoginInput.css';
+import './LoginInput.module.css';
 
 const LoginInput = ({ label, type = 'text', value, onChange }) => {
   return (

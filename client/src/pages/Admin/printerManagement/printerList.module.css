@@ -1,0 +1,204 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(217, 217, 217, 0.33);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    height: calc(100vh - 80px); 
+    margin-top: 100px; 
+    margin-left: 15px;
+}
+
+.printerBox {
+    width: 245px;
+    background-color: white;
+    
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 45px;
+    font-size: 13px;
+}
+.printerManagementTitle{
+    background-color: #0533BC;
+
+    color:white; 
+     padding: 15px 28px; 
+     text-align: center; 
+     border-radius: 25px;
+}
+.printerBox h2 {
+    margin-top: -300px;
+    margin-bottom: 30px;
+}
+.underline { 
+    width: 50%; 
+    border: none; 
+    border-top: 0.2px solid rgba(217, 217, 217, 1); 
+    margin-bottom: 18px;
+    margin-top: -5px;
+ }
+.printerList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.printerList li {
+    margin: 10px 0;
+    font-size: 16px; 
+}
+.listItem{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 18px; 
+    border: 1px solid #ccc; 
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9; 
+    width: 200px;
+}
+.button { 
+    width: 240px;
+    display: flex; 
+    align-items: center; 
+    border-radius: 10px;
+    margin: 10px 0; 
+    padding: 10px; 
+    cursor: pointer;  
+    color: #000; 
+    text-decoration: none; 
+    background-color: white; 
+    transition: linear.2s;
+    color:#000
+} 
+.button:hover { 
+    background-color: rgba(5, 66, 251, 0.59);
+}
+.buttonList { 
+    background-color: rgba(5, 66, 251, 0.59); 
+    color: black; 
+}
+.icon { 
+    margin-right: 10px; 
+ }
+
+ /*right*/
+.mainContent {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 1px 10px 45px 60px;
+}
+
+.mainContent h2 {
+    margin-top: 0;
+}
+
+.headerBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.searchContainer {
+    position: relative;
+    flex: 1;
+}
+
+.searchInput {
+    width: 200px;
+    padding: 10px 10px 10px 40px;
+    border: 0.75px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+.searchInput:focus {
+    border-color: black; 
+}
+.searchIcon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: #666;
+}
+
+.printerBar {
+    display: flex;
+    align-items: center;
+
+}
+
+.printerBar h2 {
+    margin-right: 380px;
+    font-size: 30px;
+    color: #022EB2;
+}
+
+.addPrinterBtn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.5s ease; 
+}
+
+.addPrinterBtn:active{
+    transform: scale(0.65);
+}
+.printerTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.printerTable th, .printerTable td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+    text-align: center; 
+    vertical-align: middle;
+}
+
+.printerTable th {
+    background-color: rgba(0, 0, 0, 0.2);;
+}
+
+.actions button {
+    margin-right: 5px;
+}
+.actionIcon { 
+    margin-right: 5px;
+    margin-top: 0.2px;
+ }
+
+.editBtn {
+    background-color: #154BEE;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.deleteBtn {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}

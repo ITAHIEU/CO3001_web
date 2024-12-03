@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(217, 217, 217, 0.33);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    height: calc(100vh - 80px); 
+    margin-top: 100px; 
+    margin-left: 15px;
+   
+}
+.printerBox {
+    width: 245px;
+    background-color: white;
+    
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 45px;
+    font-size: 13px;
+}
+.printerManagementTitle{
+    background-color: #0533BC;
+    color:white; 
+    padding: 15px 28px; 
+    text-align: center; 
+    border-radius: 25px;
+}
+.printerBox h2 {
+    margin-top: -300px;
+    margin-bottom: 30px;
+}
+.underline { 
+    width: 50%; 
+    border: none; 
+    border-top: 0.2px solid rgba(217, 217, 217, 1); 
+    margin-bottom: 18px;
+    margin-top: -5px;
+ }
+.printerList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.printerList li {
+    margin: 10px 0;
+    font-size: 16px; 
+}
+.listItem{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 18px; 
+    border: 1px solid #ccc; 
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9; 
+    width: 200px;
+}
+.button { 
+    width: 240px;
+    display: flex; 
+    align-items: center; 
+    border-radius: 10px;
+    margin: 10px 0; 
+    padding: 10px; 
+    cursor: pointer;  
+    color: #000; 
+    text-decoration: none; 
+    background-color: white; 
+    transition: linear.2s;
+    color:#000
+} 
+.button:hover { 
+    background-color: rgba(5, 66, 251, 0.59);
+}
+.icon { 
+    margin-right: 10px; 
+ }
+ 
+ .imageBox {
+    width: 76%;
+    /* background-color: white; */
+    padding: 0px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+    margin-bottom: 45px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.backgroundImage {
+    object-fit: cover;
+    width: 100%; 
+    height: 100%;
+}
+
+.overlayText {
+    position: absolute;
+    text-align: center;
+    color: black;
+    font-size: 45px;
+    background-color: rgba(5, 66, 251, 0.25);
+    padding: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+.overlayText p {
+    margin: 0;
+}
+
+.smallText {
+    font-size: 16px;
+}
+

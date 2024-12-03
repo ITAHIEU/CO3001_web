@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoginBtn.css'; 
+import './LoginBtn.module.css'; 
 
 const LoginBtn = ({ label, onClick, className, type = 'button' }) => {
     return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LoginInput from '../../components/login/LoginInput';
 import LoginBtn from '../../components/login/LoginBtn';
-import './Loginpage.css';
+import './Loginpage.module.css';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');

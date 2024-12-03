@@ -1,18 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css'; // Import CSS toàn cục cho ứng dụng
+import './index.css';
 import reportWebVitals from './reportWebVitals';
-// import HomePage from './pages/login/Homepage'; // Trang chính
-import Loginpage from './pages/login/Loginpage';
+import App from './App.jsx';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div className="App">
-      {/* <HomePage /> */}
-      <Loginpage />
-    </div>
+    <App/>
   </React.StrictMode>
 );
 
-// Performance logging (optional)
-reportWebVitals(console.log);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

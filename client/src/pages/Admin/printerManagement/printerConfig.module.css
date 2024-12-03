@@ -1,0 +1,240 @@
+/* ===== Base Styles ===== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(217, 217, 217, 0.33);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    height: calc(100vh - 80px);
+    margin-top: 100px;
+    margin-left: 15px;
+}
+
+/* ===== PrinterBox Styles ===== */
+.printerBox {
+    width: 245px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 45px;
+    font-size: 13px;
+}
+
+.printerManagementTitle {
+    background-color: #0533BC;
+    color: white;
+    padding: 15px 28px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.printerBox h2 {
+    margin-top: -300px;
+    margin-bottom: 30px;
+}
+
+.underline {
+    width: 40%;
+    border: none;
+    border-top: 0.2px solid rgba(0, 0, 0, 0.4);
+    margin-bottom: 18px;
+    margin-top: -5px;
+}
+
+/* ===== Printer List Styles ===== */
+.printerList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.printerList li {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 200px;
+}
+
+/* ===== Button Styles ===== */
+.button {
+    width: 240px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: white;
+    color: #000;
+    transition: background-color 0.2s linear;
+}
+
+.button:hover {
+    background-color: rgba(5, 66, 251, 0.59);
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.buttonSys{
+    background-color: rgba(5, 66, 251, 0.59);
+    color: black;
+}
+
+/* ===== Main Content Styles ===== */
+.mainContent {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 1px 10px 45px 60px;
+}
+
+.mainContent h2 {
+    font-size: 30px;
+    color: #022EB2;
+    text-align: center;
+}
+
+/* ===== Config Item Styles ===== */
+.configItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding: 10px;
+    background-color: rgba(0, 81, 255, 0.13);
+    border-radius: 10px;
+    margin-left: 90px;
+    margin-right: 90px;
+    border: 1px solid rgba(0, 81, 255, 0.3);
+
+}
+
+.label {
+    flex: 1;
+    text-align: left;
+    margin-left: 12px;
+    font-weight: bold;
+}
+
+.value, .input {
+    flex: 2;
+    background-color: white;
+    padding: 10px 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin-left: 70px;
+    margin-right: 50px;
+    outline: none;
+    border: 1px solid lightslategray;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input {
+    border: 1px solid #ddd;
+}
+
+.configItem button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(216, 10, 10, 0.87);
+    color: black;
+    border: 0.6px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-left: 10px;
+}
+.configItem button:active {
+    transform: scale(0.95);
+}
+/*======= icon =====*/
+.actionIcon {
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+}
+/* ===== Save Button Styles ===== */
+.saveBtn {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    margin: 45px auto 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.saveBtn:hover {
+    background-color: #45a049;
+}
+
+.saveBtn:active {
+    transform: scale(0.95);
+}
+
+/* ===== List Styles ===== */
+.list {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto; 
+    max-width: 100%; 
+    white-space: nowrap; 
+    margin-right: 50px;
+  }
+  
+.configItem__listItem {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
+    height: 40px; 
+    background-color: white; 
+    border: 1px solid lightslategray;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; 
+    padding: 5px 5px; 
+    box-sizing: border-box; 
+    font-size: 14px; 
+    white-space: nowrap; 
+}
+/* Biểu tượng xóa */
+.removeIcon {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+    transition: transform 0.3s ease;
+}
+
+.removeIcon:hover {
+    transform: scale(1.2);
+}
