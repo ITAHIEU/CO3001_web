@@ -1,0 +1,15 @@
+[
+    {
+        "id":"22XXXXX",
+        "username":"Nguyen Van A",
+        "gender":"Nam",
+        "class":"KT22XXXX",
+        "status": "Đang hoạt động"
+    },{
+        "id":"21XXXXX",
+        "username":"Nguyen Thi B",
+        "gender":"Nữ",
+        "class":"KT21XXXX",
+        "status": "Không hoạt động"   
+    }
+]

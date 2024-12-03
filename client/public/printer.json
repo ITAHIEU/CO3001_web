@@ -1,0 +1,15 @@
+[
+    {
+        "id":"001",
+        "brand": "HP",
+        "model": "xxx",
+        "location": "H6-P103",
+        "status": "Hoạt động"
+    },{
+        "id":"002",
+        "brand": "HP",
+        "model": "YYY",
+        "location": "B4-P103",
+        "status": "Hoạt động"
+    }
+]

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./HistPage.module.css";
-import { Link } from "react-router-dom";
 const HistPage = () => {
   const [username, setUsername] = useState(null);
   const [order, setOrder] = useState([]); // Initialize order as an empty array

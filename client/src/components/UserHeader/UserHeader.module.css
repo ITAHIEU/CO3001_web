@@ -144,7 +144,7 @@ body{
 
     .mobileMenu.show {
         opacity: 1;
-        height: auto; /* Expand to the natural height */
+        height: auto;
     }
 
     .mobileMenu a {

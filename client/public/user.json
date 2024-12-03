@@ -2,6 +2,7 @@
     {
         "id": 1,
         "username": "Con lon beo",
+        "mssv":"22XXXXX",
         "sex": "Nam",
         "phone": "07xxxxxxx1",
         "birth": "dd/mm/yyyy",

@@ -31,7 +31,7 @@ const Profile = () => {
                     <span className="material-symbols-outlined">account_circle</span>
                     <ul>
                         <li className={styles.text}>{user ? user.username : "Username"}</li>
-                        <li className={styles.text}>#111111</li>
+                        <li className={styles.text}>{user && user.mssv}</li>
                     </ul>
                 </div>
                 <div className={styles.profile}>

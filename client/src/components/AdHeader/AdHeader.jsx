@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import styles from "./UserHeader.module.css";
+import styles from "./AdHeader.module.css";
 import logo from "../../assets/hcmut.png";
 import { Link } from "react-router-dom";
 
-const UserHeader = ({ onToggleDropdown, activeIndex }) => {
+const AdHeader = ({ onToggleDropdown, activeIndex }) => {
     const [username, setUsername] = useState(null);
     const [showMenu, setShowMenu] = useState(false);
     const mobileMenuRef = useRef(null); 
@@ -30,19 +30,19 @@ const UserHeader = ({ onToggleDropdown, activeIndex }) => {
         };
     }, []);
 
-    const toggleMenu = () => setShowMenu((prev) => !prev); // Toggle menu visibility
+    const toggleMenu = () => setShowMenu((prev) => !prev); 
 
     return (
         <header className={styles.header}>
             <div className={styles.logoContainer}>
                 <button className={styles.menuButton} onClick={toggleMenu}>
-                    <span className="material-symbols-outlined">menu</span> {/* Button to show menu */}
+                    <span className="material-symbols-outlined">menu</span> 
                 </button>
                 <img src={logo} alt="Logo" className={styles.logo} />
             </div>
             <nav className={styles.nav}>
                 <ul className={styles.navList}>
-                    {[{ label: "Trang chủ", path: "/mainPage" }, { label: "In tài liệu", path: "/print-page" }, { label: "Lịch sử in", path: "/hist-page" }].map(
+                    {[{ label: "Trang chủ", path: "/Ad-main-page" }, { label: "Quản lý máy in", path: "/printer-management" }, { label: "Quản lý người dùng", path: "/user-management" }, { label: "Quản lý lịch sử in", path: "/hist-management" }].map(
                         (item, index) => (
                             <li
                                 key={index}
@@ -61,15 +61,16 @@ const UserHeader = ({ onToggleDropdown, activeIndex }) => {
                     </li>
                     <li className={`${styles.rightItem} ${styles.login}`}>
                         <span className="material-symbols-outlined">account_circle</span>
-                        <a href="#" onClick={onToggleDropdown}>
+                        <a href="#">
                             {username ? `${username}` : "Username"}
                         </a>
                     </li>
+                    <li><Link to="/"><span className="material-symbols-outlined" style={{fontSize:"30px"}}>exit_to_app</span></Link></li>
                 </ul>
             </nav>
 
             <div ref={mobileMenuRef} className={`${styles.mobileMenu} ${showMenu ? styles.show : ""}`}>
-                {[{ label: "Trang chủ", path: "/mainPage" }, { label: "In tài liệu", path: "/print-page" }, { label: "Lịch sử in", path: "/hist-page" }].map(
+                {[{ label: "Trang chủ", path: "/Ad-main-page" }, { label: "Quản lý máy in", path: "/printer-management" }, { label: "Quản lý người dùng", path: "/user-management" }, { label: "Quản lý lịch sử in", path: "/hist-management" }].map(
                     (item, index) => (
                         <Link key={index} to={item.path} onClick={toggleMenu}>
                             {item.label}
@@ -81,4 +82,4 @@ const UserHeader = ({ onToggleDropdown, activeIndex }) => {
     );
 };
 
-export default UserHeader;
+export default AdHeader;
