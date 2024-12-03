@@ -6,6 +6,7 @@ body {
     overflow: hidden;
     height: 100vh;
 }
+ /*==============left==================*/
 
 .container {
     display: flex;
@@ -92,7 +93,7 @@ body {
     margin-right: 10px; 
  }
 
- /*right*/
+ /*==============right==================*/
 .mainContent {
     flex: 1;
     padding: 20px;
@@ -149,22 +150,12 @@ body {
     color: #022EB2;
 }
 
-.addPrinterBtn {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.5s ease; 
-}
 
-.addPrinterBtn:active{
-    transform: scale(0.65);
-}
 .printerTable {
-    width: 100%;
+    width: 85%;
     border-collapse: collapse;
+    margin: 0 auto;
+
 }
 
 .printerTable th, .printerTable td {
@@ -186,7 +177,21 @@ body {
     margin-right: 5px;
     margin-top: 0.2px;
  }
+/*==========BUTTON============*/
+.addPrinterBtn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: 1px solid black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.5s ease; 
+}
 
+.addPrinterBtn:active{
+    transform: scale(0.65);
+}
 .editBtn {
     background-color: #154BEE;
     color: white;
@@ -202,3 +207,4 @@ body {
     cursor: pointer;
     border-radius: 5px;
 }
+/*==========END BUTTON============*/
