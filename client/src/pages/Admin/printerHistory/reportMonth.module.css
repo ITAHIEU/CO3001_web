@@ -31,9 +31,9 @@ body {
     background-color: #0533BC;
 
     color:white; 
-     padding: 15px 28px; 
-     text-align: center; 
-     border-radius: 25px;
+    padding: 15px 28px; 
+    text-align: center; 
+    border-radius: 25px;
 }
 .printerBox h2 {
     margin-top: -300px;
@@ -103,13 +103,22 @@ body {
 
 .mainContent h2 {
     margin-top: 0;
+    color: #022EB2;
 }
-
+.monthlyReportTitle { 
+    text-align: center; 
+    font-size: 24px; 
+    margin-bottom: 20px; 
+}
 .reportTable {
-    width: 100%;
+    margin: 0 auto;
+    width: 80%;
     border-collapse: collapse;
-}
 
+}
+.reportTable th{
+    background-color: rgba(0, 0, 0, 0.2);
+}
 .reportTable th, .reportTable td {
     border: 1px solid black;
     padding: 10px;
@@ -120,28 +129,47 @@ body {
     white-space: nowrap;
     font-size: 14px;
 }
-
+/*===============BUTTON===============*/
 .printBtn {
+    display: flex; 
     margin: 10px;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
+    padding: 10px;  
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.printBtn{
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 .printBtn:hover {
-    background-color: #0056b3;
+    background-color: darkgreen;
 }
 
 .printBtn:active {
     transform: scale(0.95);
 }
+.chartBtn{
+    display: flex; 
+    /* margin: 8px; */
+    margin-left: 910px;
+    padding: 10px;  
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    color: black;
+    border-radius: 4px;
+    border: 1px solid black;
+
+} 
+
+/*=============== END BUTTON===============*/
 
 .actionIcon {
     margin-right: 5px;
@@ -149,3 +177,29 @@ body {
     height: 16px;
 }
 
+/*================handle print=============*/
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .mainContent, .mainContent * {
+        visibility: visible;
+    }
+
+    .mainContent {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+    }
+
+    .buttonGroup {
+        display: none;
+    }
+
+    .printerBox, .header {
+        display: none;
+    }
+}
