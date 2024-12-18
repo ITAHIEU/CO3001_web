@@ -81,3 +81,15 @@ cd client
 npm start
 
 ```
+
+The application should be starting. The ReactJS application will run on ....
+
+To log in as a student
+- Username: 
+- Password:
+
+To log in as an admin
+- Username:
+- Password:
+
+You are now ready to explore our application
