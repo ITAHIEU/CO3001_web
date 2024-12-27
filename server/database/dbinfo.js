@@ -5,8 +5,8 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '123456',
-  database: 'CNPM',
-  port: '3307'
+  database: 'cnpm',
+  port: '3306'
 });
 
 // Xuất kết nối sử dụng Promise
