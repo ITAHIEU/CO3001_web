@@ -1,0 +1,57 @@
+[
+    {
+        "id": "22XXXXX",
+        "username": "Nguyen Van A",
+        "doc": "Asign1.pdf",
+        "date": "11/09/2024",
+        "amount": "10",
+        "type": "A4",
+        "printer":"B4",
+        "cost":"5000đ"
+    },{
+        "id": "21XXXXX",
+        "username": "Nguyen Thi B",
+        "doc": "Asign2.pdf",
+        "date": "11/11/2024",
+        "amount": "5",
+        "type": "A3",
+        "printer":"H6",
+        "cost":"5000đ"
+    },{
+        "id": "20XXXXX",
+        "username": "Nguyen Van C",
+        "doc": "Asign3.pdf",
+        "date": "11/12/2024",
+        "amount": "20",
+        "type": "A4",
+        "printer":"B4",
+        "cost":"20000đ"
+    },{
+        "id": "20XXXXX",
+        "username": "Nguyen Van C",
+        "doc": "Asign3.pdf",
+        "date": "11/10/2024",
+        "amount": "20",
+        "type": "A4",
+        "printer":"B4",
+        "cost":"30000đ"
+    },{
+        "id": "20XXXXX",
+        "username": "Nguyen Van C",
+        "doc": "Asign3.pdf",
+        "date": "11/12/2024",
+        "amount": "20",
+        "type": "A4",
+        "printer":"B4",
+        "cost":"40000đ"
+    },{
+        "id": "20XXXXX",
+        "username": "Nguyen Van C",
+        "doc": "Asign3.pdf",
+        "date": "11/11/2024",
+        "amount": "20",
+        "type": "A4",
+        "printer":"B4",
+        "cost":"10000đ"
+    }
+]
