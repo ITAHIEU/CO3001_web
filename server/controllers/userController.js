@@ -40,6 +40,28 @@ const userController = {
       res.status(500).json({ message: 'Error buying printing pages', error });
     }
   },
+  getById: async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const [result] = await db.promise().query('SELECT * FROM Users WHERE id = ?', [userId]);
+      if (!result.length) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.status(200).json(result[0]);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching user by ID', error });
+    }
+  },
+  async updateBalance(userId, newBalance) {
+    try {
+      await db.promise().query('UPDATE Users SET balance = ? WHERE id = ?', [newBalance, userId]);
+      return { message: 'Balance updated successfully' };
+    } catch (error) {
+      throw new Error('Error updating balance: ' + error.message);
+    }
+  }
+  
+  
 };
 
 module.exports = userController;

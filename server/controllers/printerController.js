@@ -28,6 +28,7 @@ const printerController = {
       res.status(500).json({ message: 'Error updating printer status', error });
     }
   },
+  
 };
 
 module.exports = printerController;
