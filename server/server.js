@@ -10,6 +10,7 @@ const db = require('./database/dbinfo');
 const userRoutes = require('./routes/userRoutes');
 const printerRoutes = require('./routes/printerRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const storage = path.join(__dirname, '../uploads');
 
 // (async () => {
 //   try {
@@ -68,6 +69,6 @@ app.post('/upload', upload.single('file'), (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}}`);
 });
