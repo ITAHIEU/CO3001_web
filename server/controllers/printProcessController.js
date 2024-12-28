@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const Document = require('../models/documentModel');
 const PrintLog = require('../models/printJob');
-const Printer = require('../models/Printer');
+const Printer = require('../models/printerModel');
 
 class PrintProcessController {
   static async printDocument(req, res) {
