@@ -11,7 +11,7 @@ function UserLoginHomePage() {
         <Logo />
         <div>
           <UserCard label="ADMIN" icon={icon} path={'/admin-login'}/>
-          <UserCard label="USER" icon={icon} path={'user-login'}/>
+          <UserCard label="USER" icon={icon} path={'/user-login'}/>
         </div>
       </div>
     </div>

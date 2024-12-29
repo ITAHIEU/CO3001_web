@@ -13,9 +13,10 @@ class AdminController {
             res.status(200).json({
                 message: 'Login successful',
                 user: {
+                    id: user.user_id,
                     email: user.email,
                     name: user.name,
-                    role: user.role
+                    role: user.role,
                 }
             });
         } catch (err) {

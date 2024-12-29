@@ -9,14 +9,18 @@ const UserHeader = ({ onToggleDropdown, activeIndex }) => {
     const mobileMenuRef = useRef(null); 
 
     useEffect(() => {
-        fetch("/user.json")
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.length > 0 && data) {
-                    setUsername(data[0].username);
-                }
-            })
-            .catch((error) => console.error("Error fetching username", error));
+        // fetch("/user.json")
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         if (data.length > 0 && data) {
+        //             setUsername(data[0].username);
+        //         }
+        //     })
+        //     .catch((error) => console.error("Error fetching username", error));
+        const data=localStorage.getItem("user");
+        if(data) {
+            setUsername(JSON.parse(data).name);
+        }
 
         const handleClickOutside = (event) => {
             if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {

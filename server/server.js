@@ -12,6 +12,7 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const LoginRoutes = require('./routes/LoginRoutes');
 const AdminRoutes = require('./routes/AdminRoutes');
 const FileRoutes = require('./routes/fileRoutes');
+app.use(cors());
 // const storage = path.join(__dirname, '../uploads');
 
 // (async () => {

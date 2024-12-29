@@ -3,68 +3,53 @@ import BasicLineChart from "../../../components/Chart/Chart";
 import styles from "./HistoryManagement.module.css";
 
 const HistManagement = () => {
-  const [users, setUsers] = useState([]);
+  const [jobs, setJobs] = useState([]);
   const [state, setState] = useState("Lịch sử");
   const [activeItem, setActiveItem] = useState("Lịch sử");
   const [searchTerm, setSearchTerm] = useState("");
-  const [editingUser, setEditingUser] = useState(null);
-  const [isAdding, setIsAdding] = useState(false);
-  const [newUser, setNewUser] = useState({ id: "", username: "", doc: "", date: "", amount: "", type: "", printer: "", cost: "" });
-  
+
   const handleClick = (item) => {
     setActiveItem(item);
+    setState(item);
   };
 
+  // Fetch print job data
   useEffect(() => {
-    fetch("/history.json")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.length > 0) {
-          setUsers(data);
-        }
-      })
-      .catch((error) => console.error("Error fetching username", error));
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/admin/printJob"); // Thay đổi endpoint nếu cần
+        const data = await response.json();
+        setJobs(data);
+      } catch (error) {
+        console.error("Error fetching print jobs:", error);
+      }
+    };
+
+    fetchJobs();
   }, []);
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (isAdding) {
-      setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
-    } else {
-      setEditingUser((prevUser) => ({ ...prevUser, [name]: value }));
-    }
-  };
 
-  const handleAdd = () => {
-    if (newUser.id && newUser.username) {
-      setUsers([...users, newUser]);
-      setNewUser({ id: "", username: "", doc: "", date: "", amount: "", type: "", printer: "", cost: "" });
-      setIsAdding(false);
-    } else {
-      alert("Please fill in all required fields (ID and Username).");
-    }
-  };
-
-  const filteredUsers = users.filter((user) => {
+  // Filter jobs by search term
+  const filteredJobs = jobs.filter((job) => {
     const search = searchTerm.toLowerCase();
     return (
-      user.username.toLowerCase().includes(search) ||
-      user.doc.toLowerCase().includes(search) ||
-      user.id.toString().includes(search)
+      job.file_name.toLowerCase().includes(search) ||
+      job.user_id.toString().includes(search) ||
+      job.printer_id.toString().includes(search)
     );
   });
-  const costDataByMonth = Array(12).fill(0); 
-  let totalPage = 0;
-  users.forEach((user) => {
-    const month = parseInt(user.date.slice(3, 5), 10) - 1; 
-    const cost = parseFloat(user.cost) || 0;
-    const page = parseInt(user.amount) || 0;
-    if (!isNaN(month)) {
-      costDataByMonth[month] += cost;
-    }
-    if(!isNaN(page)){
-      totalPage += page;
-    }
+
+  // Calculate statistics
+  const costDataByMonth = Array(12).fill(0); // Array for monthly costs
+  let totalPages = 0;
+  filteredJobs.forEach((job) => {
+    const startMonth = new Date(job.start_time).getMonth(); // Extract month
+    const pageCount = job.page_count_a4 + job.page_count_a3;
+    totalPages += pageCount * job.copies;
+
+    const cost = pageCount * job.copies * (job.sides === "double-sided" ? 1.5 : 1);
+    costDataByMonth[startMonth] += cost;
   });
+
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
@@ -73,13 +58,13 @@ const HistManagement = () => {
           <div className={styles.option}>
             <ul>
               <li
-                onClick={() => {handleClick("Lịch sử");setState("Lịch sử");}}
+                onClick={() => handleClick("Lịch sử")}
                 className={activeItem === "Lịch sử" ? styles.active : ""}
               >
                 Lịch sử
               </li>
               <li
-                onClick={() => {handleClick("Thống kê");setState("Thống kê")}}
+                onClick={() => handleClick("Thống kê")}
                 className={activeItem === "Thống kê" ? styles.active : ""}
               >
                 Thống kê
@@ -87,126 +72,78 @@ const HistManagement = () => {
             </ul>
           </div>
         </div>
-        {state === "Lịch sử" ? (<div className={styles.history}>
-          <div className={styles.bar}>
-            <input
-              type="text"
-              placeholder="Tìm kiếm theo ID, tên hoặc tài liệu..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className={styles.searchInput}
-            />
-            {/* <button onClick={() => setIsAdding(true)} style={{ color: "#000" }}>
-              <span className="material-symbols-outlined">add</span>
-            </button> */}
-          </div>
-          <div className={styles.content}>
-            <table className={styles.orderTable}>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Họ và tên</th>
-                  <th>Tên tài liệu</th>
-                  <th>Thời gian</th>
-                  <th>Số lượng</th>
-                  <th>Loại giấy</th>
-                  <th>Máy in</th>
-                  <th>Giá thành</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isAdding && (
+
+        {state === "Lịch sử" ? (
+          <div className={styles.history}>
+            <div className={styles.bar}>
+              <input
+                type="text"
+                placeholder="Tìm kiếm theo file, ID người dùng hoặc máy in..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <div className={styles.content}>
+              <table className={styles.orderTable}>
+                <thead>
                   <tr>
-                    <td>
-                      <input type="text" name="id" value={newUser.id} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <input type="text" name="username" value={newUser.username} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <input type="text" name="doc" value={newUser.doc} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <input type="text" name="date" value={newUser.date} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <input type="text" name="amount" value={newUser.amount} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <select name="type" value={newUser.type} onChange={handleChange}>
-                        <option value="">Select</option>
-                        <option value="A4">A4</option>
-                        <option value="A3">A3</option>
-                      </select>
-                    </td>
-                    <td>
-                      <select name="printer" value={newUser.printer} onChange={handleChange}>
-                        <option value="">Select</option>
-                        <option value="B4">B4</option>
-                        <option value="H6">H6</option>
-                      </select>
-                    </td>
-                    <td>
-                      <input type="text" name="cost" value={newUser.cost} onChange={handleChange} />
-                    </td>
-                    <td colSpan="2">
-                      <button onClick={handleAdd} className={styles.save}>
-                        Save
-                      </button>
-                      <button
-                        onClick={() => {
-                          setIsAdding(false);
-                          setNewUser({ id: "", username: "", doc: "", date: "", amount: "", type: "", printer: "", cost: "" });
-                        }}
-                        className={styles.remove}
-                      >
-                        Cancel
-                      </button>
-                    </td>
+                    <th>ID</th>
+                    <th>Người dùng</th>
+                    <th>Tài liệu</th>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Số trang A4</th>
+                    <th>Số trang A3</th>
+                    <th>Bản sao</th>
+                    <th>Loại</th>
                   </tr>
-                )}
-                {
-                  filteredUsers.length > 0 ? (
-                    filteredUsers.map((user) => (
-                      <tr key={user.id}>
-                        <td>{user.id}</td>
-                        <td>{user.username}</td>
-                        <td>{user.doc}</td>
-                        <td>{user.date}</td>
-                        <td>{user.amount}</td>
-                        <td>{user.type}</td>
-                        <td>{user.printer}</td>
-                        <td>{user.cost}</td>
+                </thead>
+                <tbody>
+                  {filteredJobs.length > 0 ? (
+                    filteredJobs.map((job) => (
+                      <tr key={job.job_id}>
+                        <td>{job.job_id}</td>
+                        <td>{job.user_id}</td>
+                        <td>{job.file_name}</td>
+                        <td>{new Date(job.start_time).toLocaleString()}</td>
+                        <td>{new Date(job.end_time).toLocaleString()}</td>
+                        <td>{job.page_count_a4}</td>
+                        <td>{job.page_count_a3}</td>
+                        <td>{job.copies}</td>
+                        <td>{job.sides}</td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="8" className={styles.noOrders}>
+                      <td colSpan="9" className={styles.noOrders}>
                         Không có kết quả phù hợp
                       </td>
                     </tr>
-                  )
-                }
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.infoChart}>
+            <table className={styles.staticTable}>
+              <tbody>
+                <tr>
+                  <td>Tổng số trang in trong năm</td>
+                  <td>{totalPages}</td>
+                </tr>
+                <tr>
+                  <td>Tổng chi phí trong năm</td>
+                  <td>
+                    {costDataByMonth.reduce((acc, current) => acc + current, 0).toFixed(2)} VND
+                  </td>
+                </tr>
               </tbody>
             </table>
+            <BasicLineChart data={costDataByMonth} />
           </div>
-        </div>):
-        <div className={styles.infoChart}>
-          <table className={styles.staticTable}>
-            <tbody>
-              <tr>
-                <td>Tổng trang in trong năm</td>
-                <td>{totalPage}</td>
-              </tr>
-              <tr>
-                <td>Tổng thu nhập trong năm</td>
-                <td>{costDataByMonth.reduce((acc,current) => acc + current , 0)}</td>
-              </tr>
-            </tbody>
-          </table>
-          <BasicLineChart data={costDataByMonth}/>
-        </div>
-        }
+        )}
       </div>
     </div>
   );

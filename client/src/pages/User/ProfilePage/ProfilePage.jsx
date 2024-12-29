@@ -14,15 +14,20 @@ const Profile = () => {
         if(isDropdownVisible) setDropdownVisible(false);
     }
     useEffect(() => {
-        fetch("/user.json")
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.length > 0) {
-              setUsername(data[0]);
-            //   setOrder(data[0].order || []);
-            }
-          })
-          .catch((error) => console.error("Error fetching username", error));
+        // fetch("/user.json")
+        //   .then((response) => response.json())
+        //   .then((data) => {
+        //     if (data.length > 0) {
+        //       setUsername(data[0]);
+        //     //   setOrder(data[0].order || []);
+        //     }   
+        //   })
+        //   .catch((error) => console.error("Error fetching username", error));
+
+          const data=localStorage.getItem("user");
+          if(data) {
+              setUsername(JSON.parse(data));
+          }
       }, []);
     return (
         <div className={styles.container} onClick={clickOutside}>
@@ -30,8 +35,8 @@ const Profile = () => {
                 <div className={styles.info}>
                     <span className="material-symbols-outlined">account_circle</span>
                     <ul>
-                        <li className={styles.text}>{user ? user.username : "Username"}</li>
-                        <li className={styles.text}>{user && user.mssv}</li>
+                        <li className={styles.text}>{user ? user.name : "Username"}</li>
+                        <li className={styles.text}>{user && user.id}</li>
                     </ul>
                 </div>
                 <div className={styles.profile}>
@@ -41,7 +46,7 @@ const Profile = () => {
                             <div key={user.id} className={styles.userInfo}>
                                 <div className={styles.row}>
                                     <span className={styles.label}>Tên người dùng:</span>
-                                    <span className={styles.value}>{user.username}</span>
+                                    <span className={styles.value}>{user.name}</span>
                                 </div>
                                 <div className={styles.row}>
                                     <span className={styles.label}>Giới tính:</span>
@@ -61,7 +66,7 @@ const Profile = () => {
                                 </div>
                                 <div className={styles.row}>
                                     <span className={styles.label}>Email:</span>
-                                    <span className={styles.value}>{user.mail}</span>
+                                    <span className={styles.value}>{user.email}</span>
                                 </div>
                                 <div className={styles.row}>
                                     <span className={styles.label}>Số điện thoại:</span>

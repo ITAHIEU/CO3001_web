@@ -1,104 +1,145 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./PrinterManagement.module.css";
 
-const UserManagement = () => {
-  const [users, setUsers] = useState([]);
+const PrinterManagement = () => {
+  const [printers, setPrinters] = useState([]);
   const [state, setState] = useState("");
-  const [option, setOption] = useState("Danh sách máy in");
-  const [activeItem, setActiveItem] = useState("Danh sách máy in");
-  const [editingUser, setEditingUser] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
-  const [newUser, setNewUser] = useState({ id: "", brand: "", model: "", location: "", status: "" });
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const handleClick = (item) => {
-    setActiveItem(item);
+  const [newPrinter, setNewPrinter] = useState({
+    brand: "",
+    model: "",
+    description: "",
+    campus_name: "",
+    building_name: "",
+    room_number: "",
+    status: "enabled",
+  });
+  const [editingPrinter, setEditingPrinter] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const fetchPrinters = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/printers");
+      setPrinters(response.data);
+    } catch (error) {
+      console.error("Error fetching printers:", error);
+    }
   };
+  // Fetch all printers
   useEffect(() => {
-    fetch("/printer.json")
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Error fetching users", error));
+   
+
+    fetchPrinters();
   }, []);
 
-  const handleRemove = (id) => {
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+  // Add a new printer
+  const handleAdd = async () => {
+    if (
+      newPrinter.brand &&
+      newPrinter.model &&
+      newPrinter.description &&
+      newPrinter.campus_name &&
+      newPrinter.building_name &&
+      newPrinter.room_number &&
+      newPrinter.status
+    ) {
+      try {
+        const response = await axios.post("http://localhost:5000/printers", newPrinter);
+        setPrinters([...printers, response.data]);
+        fetchPrinters(); 
+        setNewPrinter({
+          brand: "",
+          model: "",
+          description: "",
+          campus_name: "",
+          building_name: "",
+          room_number: "",
+          status: "enabled",
+        });
+        setIsAdding(false);
+      } catch (error) {
+        console.error("Error adding printer:", error);
+      }
+    } else {
+      alert("Please fill in all required fields.");
+    }
   };
 
-  const handleEdit = (user) => {
-    setEditingUser({ ...user });
+  // Edit a printer
+  const handleSave = async () => {
+    try {
+      console.log(editingPrinter)
+      const response = await axios.put(
+        `http://localhost:5000/printers/${editingPrinter.printer_id}`,
+        editingPrinter
+      );
+      setPrinters((prevPrinters) =>
+        prevPrinters.map((printer) =>
+          printer.printer_id === editingPrinter.printer_id ? response.data : printer
+        )
+      );
+      fetchPrinters(); 
+      setEditingPrinter(null);
+    } catch (error) {
+      console.error("Error editing printer:", error);
+    }
   };
 
-  const handleSave = () => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) => (user.id === editingUser.id ? editingUser : user))
-    );
-    setEditingUser(null);
+  // Delete a printer
+  const handleRemove = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/printers/${id}`);
+      setPrinters((prevPrinters) => prevPrinters.filter((printer) => printer.printer_id !== id));
+    } catch (error) {
+      console.error("Error deleting printer:", error);
+    }
   };
 
+  // Handle input changes for add/edit
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (isAdding) {
-      setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
+      setNewPrinter((prevPrinter) => ({ ...prevPrinter, [name]: value }));
     } else {
-      setEditingUser((prevUser) => ({ ...prevUser, [name]: value }));
+      setEditingPrinter((prevPrinter) => ({ ...prevPrinter, [name]: value }));
     }
   };
 
-  const handleAdd = () => {
-    if (newUser.id && newUser.brand) {
-      setUsers([...users, newUser]);
-      setNewUser({ id: "", brand: "", model: "", location: "", status: "" });
-      setIsAdding(false);
-    } else {
-      alert("Please fill in all required fields (ID and Username).");
-    }
-  };
-
-  const filteredUsers = users.filter((user) =>
-    (user.location.toLowerCase().includes(searchTerm.toLowerCase()) || user.brand.toLowerCase().includes(searchTerm.toLowerCase()) || user.model.toLowerCase().includes(searchTerm.toLowerCase()) || user.id.toString().includes(searchTerm)) &&
-    (state === "" || user.status === state)
+  // Filter printers by search term and status
+  const filteredPrinters = printers.filter(
+    (printer) =>
+      printer && // Đảm bảo printer không phải null hoặc undefined
+      (printer.brand?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        printer.model?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        printer.campus_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        printer.building_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        printer.room_number?.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (state === "" || printer.status === state)
   );
+  
+
 
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
-        {/* <div className={styles.info}>
-            <p>Quản lý máy in</p>
-            <div className={styles.option}>
-                <ul>
-                <li
-                    onClick={() => {handleClick("Danh sách máy in");setOption("Danh sách máy in");}}
-                    className={activeItem === "Danh sách máy in" ? styles.active : ""}
-                >
-                    Danh sách máy in
-                </li>
-                <li
-                    onClick={() => {handleClick("Thiết lập hệ thống");setOption("Thiết lập hệ thống")}}
-                    className={activeItem === "Thiết lập hệ thống" ? styles.active : ""}
-                >
-                    Thiết lập hệ thống
-                </li>
-                </ul>
-            </div>
-        </div> */}
         <div className={styles.history}>
           <div className={styles.bar}>
             <div>
               <input
                 type="text"
-                placeholder="Search by brand, model or ID..."
+                placeholder="Search by brand, model, or location..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={styles.searchInput}
               />
               <ul>
                 <li onClick={() => setState("")}>Tất cả</li>
-                <li onClick={() => setState("Hoạt động")}>Hoạt động</li>
-                <li onClick={() => setState("Không hoạt động")}>Không hoạt động</li>
+                <li onClick={() => setState("enabled")}>Hoạt động</li>
+                <li onClick={() => setState("disabled")}>Không hoạt động</li>
               </ul>
             </div>
             <button onClick={() => setIsAdding(true)} style={{ color: "#000" }}>
-                <span className="material-symbols-outlined">add</span>
+              <span className="material-symbols-outlined">add</span>
             </button>
           </div>
           <div className={styles.content}>
@@ -108,103 +149,174 @@ const UserManagement = () => {
                   <th>ID</th>
                   <th>Brand</th>
                   <th>Model</th>
-                  <th>Địa điểm</th>
-                  <th>Trạng thái</th>
-                  <th>Hành động</th>
+                  <th>Description</th>
+                  <th>Campus</th>
+                  <th>Building</th>
+                  <th>Room</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {isAdding && (
                   <tr>
-                    <td>
-                      <input type="text" name="id" value={newUser.id} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <input type="text" name="brand" value={newUser.username} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <input type="text" name="model" value={newUser.gender} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <input type="text" name="location" value={newUser.class} onChange={handleChange} />
-                    </td>
-                    <td>
-                      <select name="status" value={newUser.status} onChange={handleChange}>
+                    <td colSpan={9}>
+                      <input
+                        type="text"
+                        name="brand"
+                        placeholder="Brand"
+                        value={newPrinter.brand}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="model"
+                        placeholder="Model"
+                        value={newPrinter.model}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="description"
+                        placeholder="Description"
+                        value={newPrinter.description}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="campus_name"
+                        placeholder="Campus"
+                        value={newPrinter.campus_name}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="building_name"
+                        placeholder="Building"
+                        value={newPrinter.building_name}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="room_number"
+                        placeholder="Room"
+                        value={newPrinter.room_number}
+                        onChange={handleChange}
+                      />
+                      <select name="status" value={newPrinter.status} onChange={handleChange}>
                         <option value="">Select</option>
-                        <option value="Hoạt động">Hoạt động</option>
-                        <option value="Không hoạt động">Không hoạt động</option>
+                        <option value="enabled">Enabled</option>
+                        <option value="disabled">Disabled</option>
                       </select>
-                    </td>
-                    <td colSpan="2">
-                        <div className={styles.interact}>
-                            <button onClick={handleAdd} className={styles.save}>
-                            Save
-                        </button>
-                        <button onClick={() => {
-                            setIsAdding(false);
-                            setNewUser({ id: "", brand: "", model: "", location: "", status: "" });
-                            }} className={styles.remove}>
-                            Cancel
-                        </button>
-                        </div>
+                      <button onClick={handleAdd} className={styles.save}>
+                        Save
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsAdding(false);
+                          setNewPrinter({
+                            brand: "",
+                            model: "",
+                            description: "",
+                            campus_name: "",
+                            building_name: "",
+                            room_number: "",
+                            status: "enabled",
+                          });
+                        }}
+                        className={styles.remove}
+                      >
+                        Cancel
+                      </button>
                     </td>
                   </tr>
                 )}
-                {filteredUsers.length > 0 ? (
-                  filteredUsers.map((user) => (
-                    <tr key={user.id}>
-                      {editingUser?.id === user.id ? (
-                        <>
-                          <td>
-                            <input type="text" name="id" value={editingUser.id} onChange={handleChange} />
-                          </td>
-                          <td>
-                            <input type="text" name="brand" value={editingUser.brand} onChange={handleChange} />
-                          </td>
-                          <td>
-                            <input type="text" name="model" value={editingUser.model} onChange={handleChange} />
-                          </td>
-                          <td>
-                            <input type="text" name="location" value={editingUser.location} onChange={handleChange} />
-                          </td>
-                          <td>
-                            <select name="status" value={editingUser.status} onChange={handleChange}>
-                              <option value="Đang hoạt động">Đang hoạt động</option>
-                              <option value="Không hoạt động">Không hoạt động</option>
-                            </select>
-                          </td>
-                        </>
+                {filteredPrinters.length > 0 ? (filteredPrinters.map((printer) => (
+                  <tr key={printer.printer_id}>
+                    {editingPrinter?.printer_id === printer.printer_id ? (
+                      <>
+                        <td>{printer.printer_id}</td>
+                        <td>
+                          <input type="text" name="brand" value={editingPrinter.brand} onChange={handleChange} />
+                        </td>
+                        <td>
+                          <input type="text" name="model" value={editingPrinter.model} onChange={handleChange} />
+                        </td>
+                        <td>
+                          <input type="text" name="description" value={editingPrinter.description} onChange={handleChange} />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="campus_name"
+                            value={editingPrinter.campus_name}
+                            onChange={handleChange}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="building_name"
+                            value={editingPrinter.building_name}
+                            onChange={handleChange}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="room_number"
+                            value={editingPrinter.room_number}
+                            onChange={handleChange}
+                          />
+                        </td>
+                        <td>
+                          <select
+                            name="status"
+                            value={editingPrinter.status}
+                            onChange={handleChange}
+                          >
+                            <option value="enabled">Enabled</option>
+                            <option value="disabled">Disabled</option>
+                          </select>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>{printer.printer_id}</td>
+                        <td>{printer.brand}</td>
+                        <td>{printer.model}</td>
+                        <td>{printer.description}</td>
+                        <td>{printer.campus_name}</td>
+                        <td>{printer.building_name}</td>
+                        <td>{printer.room_number}</td>
+                        <td>{printer.status}</td>
+                      </>
+                    )}
+                    <td>
+                      {editingPrinter?.printer_id === printer.printer_id ? (
+                        <button className={styles.save} onClick={handleSave}>
+                          Save
+                        </button>
                       ) : (
-                        <>
-                          <td>{user.id}</td>
-                          <td>{user.brand}</td>
-                          <td>{user.model}</td>
-                          <td>{user.location}</td>
-                          <td>{user.status}</td>
-                        </>
+                        <button
+                          className={styles.edit}
+                          onClick={() => setEditingPrinter(printer)}
+                        >
+                          Edit
+                        </button>
                       )}
-                      <td>
-                        <div className={styles.interact}>
-                          {editingUser?.id === user.id ? (
-                            <button className={styles.save} onClick={handleSave}>
-                              Save
-                            </button>
-                          ) : (
-                            <button className={styles.edit} onClick={() => handleEdit(user)}>
-                              Edit
-                            </button>
-                          )}
-                          <button className={styles.remove} onClick={() => handleRemove(user.id)}>
-                            Remove
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+                      <button
+                        className={styles.remove}
+                        onClick={() => handleRemove(printer.printer_id)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))) : (
                   <tr>
-                    <td colSpan="7" className={styles.noOrders}>
-                      Không có người dùng nào
+                    <td colSpan="9" style={{ textAlign: "center" }}>
+                      No printers found.
                     </td>
                   </tr>
                 )}
@@ -217,4 +329,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default PrinterManagement;

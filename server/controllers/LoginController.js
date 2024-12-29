@@ -6,15 +6,18 @@ class UserController {
         const { email, password } = req.body;
         try {
             // Gọi model để lấy người dùng và so sánh mật khẩu
+            console.log({email, password});
             const user = await UserModel.getUserByEmailAndRole(email, password, 'student');
 
             // Nếu đăng nhập thành công, trả về thông tin người dùng
             res.status(200).json({
                 message: 'Login successful',
                 user: {
+                    id: user.user_id,
                     email: user.email,
                     name: user.name,
-                    role: user.role
+                    role: user.role,
+                    balance: user.balance
                 }
             });
         } catch (err) {

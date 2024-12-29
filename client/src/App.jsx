@@ -41,7 +41,7 @@ const App = () => {
                 <Route path="/admin-login" element={<AdminLoginPage/>}/>
                 <Route path="/user-login" element={<UserLoginPage/>}/>
                 <Route path="/Ad-main-page" element={<> <AdHeader activeIndex={0}/> <AdMainPage/> </>}/>
-                <Route path="printer-management" element={<> <AdHeader activeIndex={1}/> <PrinterManagement/></>}/>
+                <Route path="/printer-management" element={<> <AdHeader activeIndex={1}/> <PrinterManagement/></>}/>
                 <Route path="/user-management" element={<> <AdHeader activeIndex={2}/> <UserManagement/> </>}/>
                 <Route path="/hist-management" element={<> <AdHeader activeIndex={3}/> <HistManagement/></>}/>
 

@@ -10,6 +10,19 @@ const User = {
   getById: async (userId) => { const [rows] = await db.query('SELECT * FROM Users WHERE user_id = ?', [userId])
     return rows[0];
   },
+  getUserByEmailAndRole : async (email, role) => {
+    try {
+        const query = 'SELECT * FROM Users WHERE email = ? AND role = ?';
+        const [rows] = await db.query(query, [email, role]);
+
+        const user = rows[0];
+
+        return user;
+    } catch (err) {
+        console.error('Error in getUserByEmailAndRole or comparing password:', err.message);
+        throw err; // Ném lỗi ra ngoài để có thể xử lý ở nơi gọi hàm
+    }
+},
 };
 
 
