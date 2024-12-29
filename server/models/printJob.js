@@ -1,17 +1,20 @@
 const db = require('../database/dbinfo');
+const PrintJobModel = {
+  create: async (data) => {
+    const query = `
+      INSERT INTO Print_Jobs (user_id, printer_id, file_name, page_count_a4, page_count_a3, sides, copies, start_time, end_time)
+      VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 10 MINUTE))
+    `;
+    await db.query(query, [
+      data.user_id,
+      data.printer_id,
+      data.file_name,
+      data.page_count_a4,
+      data.page_count_a3,
+      data.sides,
+      data.copies,
+    ]);
+  },
+};
 
-class printLog {
-    static async create({ userId, printerId, document_name, start_time, end_time, pageCount_a4, pageCount_a3, paperSize, printDuplex, numberOfCopies, }) {
-      try {
-        await db.promise().query(
-          'INSERT INTO PrintLogs (user_id, printId, document_name, start_time, end_time, page_count_a4, page_count_a3, paper_size, print_duplex, number_of_copies, orientation, timestamp, printer_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-          [userId, printerId, document_name, start_time, end_time, pageCount_a4, pageCount_a3, paperSize, printDuplex, numberOfCopies, orientation, timestamp, printerId]
-        );
-      } catch (error) {
-        throw new Error('Error logging print job: ' + error.message);
-      }
-    }
-  }
-  
-  module.exports = printLog;
-  
+module.exports = PrintJobModel;

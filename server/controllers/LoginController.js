@@ -1,4 +1,4 @@
-const UserModel = require('../models/LoginModels'); // Đảm bảo import đúng model
+const UserModel = require('../models/AdminModels'); // Đảm bảo import đúng model
 
 class UserController {
     // Đăng nhập
@@ -6,15 +6,15 @@ class UserController {
         const { email, password } = req.body;
         try {
             // Gọi model để lấy người dùng và so sánh mật khẩu
-            const user = await UserModel.getUserByEmail(email, password);
+            const user = await UserModel.getUserByEmailAndRole(email, password, 'student');
 
             // Nếu đăng nhập thành công, trả về thông tin người dùng
             res.status(200).json({
                 message: 'Login successful',
                 user: {
-                    email: user.Email,
+                    email: user.email,
                     name: user.name,
-                    // Thêm các trường thông tin người dùng nếu cần
+                    role: user.role
                 }
             });
         } catch (err) {

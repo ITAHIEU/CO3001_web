@@ -8,42 +8,34 @@ const router = express.Router();
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, UPLOAD_FOLDER);
+    cb(null, path.join(__dirname, 'uploads')); // Đường dẫn lưu file
   },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName); // Đặt tên file duy nhất
   },
 });
 
-const fileFilter = (req, file, cb) => {
-  const fileType = file.mimetype.split('/')[1];
-  if (Document.validateFileType(fileType, PERMITTED_FILE_TYPES)) {
-    cb(null, true);
-  } else {
-    cb(new Error('Unsupported file type'), false);
-  }
-};
+const upload = multer({ storage });
 
-const upload = multer({ storage, fileFilter });
-
-// File upload route
-router.post('/upload', upload.single('file'), (req, res) => {
+// API endpoint for file uploads
+app.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded or unsupported file type' });
+    return res.status(400).json({
+      success: false,
+      message: 'No file uploaded',
+    });
   }
 
-  const { originalname, mimetype, size } = req.file;
-  const fileType = mimetype.split('/')[1];
-
-  // Simulate calculating page count for the document
-  const pageCount = Math.ceil(size / 1000); // Example logic for page count
-
-  const document = new Document(Date.now(), originalname, fileType, pageCount);
-
-  res.status(200).json({
-    message: 'File uploaded successfully',
-    document,
+  res.json({
+    success: true,
+    message: 'File uploaded successfully!',
+    file: req.file, // Returns file info (e.g., filename, path, etc.)
   });
 });
+
+// Serve uploaded files statically for preview
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 module.exports = router;

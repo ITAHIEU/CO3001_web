@@ -1,84 +1,41 @@
-const User = require('../models/userModel');
-const Document = require('../models/documentModel');
-const PrintLog = require('../models/printJob');
-const Printer = require('../models/Printer');
+const UserModel  = require('../models/userModel');
+// const Document = require('../models/documentModel');
+const PrintJobModel  = require('../models/printJob');
+const PrinterModel  = require('../models/printerModel');
 
-class PrintProcessController {
-  static async printDocument(req, res) {
-    const printProp = req.body;
+const createPrintJob = async (req, res) => {
+  const { user_id, printer_id, file_name, page_size, sides, copies } = req.body;
 
-    if (typeof printProp.pageDuplex !== 'boolean') {
-      return res.status(400).json({ error: 'Invalid pageDuplex value. It must be a boolean.' });
+  try {
+    const user = await UserModel.getById(user_id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    const printer = await PrinterModel.getById(printer_id);
+    if (!printer || printer.status !== 'enabled') {
+      return res.status(400).json({ error: 'Printer not available' });
     }
-    if (!printProp.documentID || !printProp.printerId) {
-      return res.status(400).json({ error: 'documentID and printerId are required.' });
+
+    const totalPages = page_size === 'A3' ? copies * 2 : copies;
+    if (user.balance < totalPages) {
+      return res.status(400).json({ error: 'Insufficient balance' });
     }
 
-    try {
-      const [user] = await User.getById(printProp.userId);
+    await UserModel.updateBalance(user_id, user.balance - totalPages);
 
-      if (!user.length) {
-        return res.status(404).json({ error: 'User not found' });
-      }
+    await PrintJobModel.create({
+      user_id,
+      printer_id,
+      file_name,
+      page_count_a4: page_size === 'A4' ? copies : 0,
+      page_count_a3: page_size === 'A3' ? copies : 0,
+      sides,
+      copies,
+    });
 
-      const [document] = await Document.getById(printProp.documentID);
-      if (!document) {
-        return res.status(404).json({ error: 'Document not found' });
-      }
-
-      const { fileType } = document;
-      const { pageCount, pageSize } = printProp;
-
-      let pageCountA4 = 0;
-      let pageCountA3 = 0;
-
-      if (pageSize === 'A4') {
-        pageCountA4 = pageCount * printProp.numberOfCopies;
-      } else if (pageSize === 'A3') {
-        pageCountA3 = pageCount * printProp.numberOfCopies;
-      }
-
-      const totalPageCount = pageCountA4 + pageCountA3;
-
-      if (user[0].balance < totalPageCount) {
-        return res.status(400).json({ error: 'Insufficient page balance to print' });
-      }
-
-      const [printer] = await Printer.getById(printProp.printerId);
-      if (!printer || !printer.state) {
-        return res.status(400).json({ error: 'Printer not available or disabled' });
-      }
-
-      if (!Printer.validateFileType(fileType)) {
-        return res.status(400).json({ error: 'Invalid document type for printing' });
-      }
-
-      const newBalance = user[0].balance - totalPageCount;
-      await User.updateBalance(printProp.userId, newBalance);
-
-      const printResult = await Printer.sendPrintRequest(printProp.printerId, document, printProp);
-
-      await PrintLog.create({
-        userId: printProp.userId,
-        printerId: printProp.printerId,
-        fileName: document.name,
-        startTime: new Date(),
-        endTime: new Date(new Date().getTime() + 600000),
-        pageCountA4,
-        pageCountA3,
-        sides: printProp.pageDuplex ? 'double-sided' : 'one-sided',
-        numberOfCopies: printProp.numberOfCopies,
-      });
-
-      res.status(200).json({
-        message: 'Document printed successfully',
-        remainingBalance: newBalance,
-        printResult,
-      });
-    } catch (error) {
-      res.status(500).json({ error: 'Error processing print request', details: error.message });
-    }
+    res.status(201).json({ message: 'Print job created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error creating print job', details: error.message });
   }
-}
+};
 
-module.exports = PrintProcessController;
+module.exports = { createPrintJob };
