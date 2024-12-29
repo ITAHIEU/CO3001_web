@@ -2,7 +2,6 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +11,7 @@ const printerRoutes = require('./routes/printerRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const LoginRoutes = require('./routes/LoginRoutes');
 const AdminRoutes = require('./routes/AdminRoutes');
+const FileRoutes = require('./routes/fileRoutes');
 // const storage = path.join(__dirname, '../uploads');
 
 // (async () => {
@@ -25,12 +25,16 @@ const AdminRoutes = require('./routes/AdminRoutes');
 
 // Middleware để xử lý JSON
 app.use(express.json());
+// Serve uploaded files statically for preview
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Các route
 // app.use('/users', userRoutes);
 app.use('/printers', printerRoutes);
 app.use('/payments', paymentRoutes);
 app.use('/users', LoginRoutes);
 app.use('/admin',AdminRoutes);
+app.use('/file',FileRoutes)
 // Định nghĩa một route đơn giản
 app.get('/', (req, res) => {
     res.send('HCMUT Smart Printing Service API is running!');

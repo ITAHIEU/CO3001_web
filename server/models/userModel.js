@@ -7,7 +7,9 @@ const User = {
   updateBalance: (userId, balance) =>
     db.query('UPDATE Users SET balance = ? WHERE user_id = ?', [balance, userId]),
   delete: (userId) => db.query('DELETE FROM Users WHERE user_id = ?', [userId]),
-  getById: (userId) => db.query('SELECT * FROM Users WHERE user_id = ?', [userId]),
+  getById: async (userId) => { const [rows] = await db.query('SELECT * FROM Users WHERE user_id = ?', [userId])
+    return rows[0];
+  },
 };
 
 

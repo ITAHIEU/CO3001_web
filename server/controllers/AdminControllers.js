@@ -1,4 +1,5 @@
 const UserModel = require('../models/AdminModels'); // Đảm bảo import đúng model
+const PrintJobModel = require('../models/printJob');
 
 class AdminController {
     // Đăng nhập
@@ -61,6 +62,14 @@ class AdminController {
             res.status(400).json({ message: err.message });
         }
     };
+    getPrintJob = async (req, res) => {
+        try {
+          const [printsJobs] = await PrintJobModel.getAll();
+          res.json(printsJobs);
+        } catch (error) {
+          res.status(500).json({ message: 'Error fetching users', error });
+        }
+      };
 }
 
 

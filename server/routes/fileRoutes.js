@@ -2,13 +2,15 @@ const express = require('express');
 const multer = require('multer');
 const { UPLOAD_FOLDER, PERMITTED_FILE_TYPES } = require('../config/config');
 const Document = require('../models/documentModel');
+const path = require('path');
+const fs = require('fs');
 
 const router = express.Router();
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'uploads')); // Đường dẫn lưu file
+    cb(null, path.join(__dirname, '../uploads')); // Đường dẫn lưu file
   },
   filename: (req, file, cb) => {
     const uniqueName = `${Date.now()}-${file.originalname}`;
@@ -19,7 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // API endpoint for file uploads
-app.post('/upload', upload.single('file'), (req, res) => {
+router.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({
       success: false,
@@ -34,8 +36,6 @@ app.post('/upload', upload.single('file'), (req, res) => {
   });
 });
 
-// Serve uploaded files statically for preview
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 module.exports = router;

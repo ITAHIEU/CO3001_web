@@ -23,6 +23,10 @@ const Printer = {
     if (!fileType) return false;
     return config.PERMITTED_FILE_TYPES.includes(fileType.toLowerCase());
   },
+  getById: async (printerId) => {
+    const [rows] = await db.query('SELECT * FROM Printers WHERE printer_id = ?', [printerId]);
+    return rows[0];
+  },
 
   async sendPrintRequest(printerId, documentModel, properties) {
     if (!documentModel || !documentModel.name) {
