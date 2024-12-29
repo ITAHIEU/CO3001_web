@@ -18,9 +18,9 @@ system, ensuring secure access.
 
 # Technology stack
 
-- Front_end: reactjs ??
-- Back_end: nodejs ??
-- Database: SQL || mySQL ??
+- Front_end: reactjs
+- Back_end: nodejs
+- Database: mySQL
 
 # Drawback
 
@@ -85,10 +85,12 @@ npm start
 The application should be starting. The ReactJS application will run on ....
 
 To log in as a student
-- Username: 
+
+- Username:
 - Password:
 
 To log in as an admin
+
 - Username:
 - Password:
 
