@@ -28,6 +28,34 @@ const PrintJobModel = {
     ]);
   },
   getAll: () => db.query('SELECT * FROM Print_Jobs'),
+  getById: async (printer_id) => {
+      const [rows] = await db.query(`SELECT 
+        pj.job_id, 
+        pj.user_id, 
+        pj.printer_id, 
+        pj.file_name, 
+        pj.start_time, 
+        pj.end_time, 
+        pj.page_count_a4, 
+        pj.page_count_a3, 
+        pj.sides, 
+        pj.copies, 
+        pj.created_at,
+        p.brand, 
+        p.model, 
+        p.description,
+        p.campus_name,
+        p.building_name,
+        p.room_number,
+        p.status
+      FROM 
+        Print_Jobs pj
+      JOIN 
+        Printers p ON pj.printer_id = p.printer_id
+      WHERE 
+        pj.user_id = ?`, [printer_id]);
+      return rows;
+    },
 };
 
 module.exports = PrintJobModel;

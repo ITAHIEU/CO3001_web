@@ -1,102 +1,152 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DragBox from "../../../components/Dragbox/Dragbox";
 import styles from "./PrintPage.module.css";
-import UserHeader from "../../../components/UserHeader/UserHeader";
-import Footer from "../../../components/FooterBar/Footer";
-import { Link } from "react-router-dom";
 import { Select, InputNumber } from 'antd';
-import print from '../../../assets/printer.png'
-const onChange = (value) => {
-  console.log('changed', value);
-};
+import print from '../../../assets/printer.png';
+import { useNavigate } from 'react-router-dom'
 
-const InputBox = ({ disabled ,style, holder }) => (
-  <InputNumber min={1} max={10} onChange={onChange} disabled={disabled} style={style} placeholder={holder}/>
+const InputBox = ({ disabled, style, holder, onChange }) => (
+  <InputNumber min={1} max={100} onChange={onChange} disabled={disabled} style={style} placeholder={holder} />
 );
 
-const SelectBox = ({ options = [], holder, onChange }) => {
-  return (
-    <Select
-      showSearch
-      placeholder={holder}
-      onChange={onChange}
-      filterOption={(input, option) =>
-        (option?.label || '').toLowerCase().includes(input.toLowerCase())
-      }
-    >
-      {options.map((option, index) => (
-        <Select.Option key={index} value={option}>
-          {option}
-        </Select.Option>
-      ))}
-    </Select>
-  );
-};
+const SelectBox = ({ options = [], holder, onChange }) => (
+  <Select
+    showSearch
+    placeholder={holder}
+    onChange={onChange}
+    filterOption={(input, option) =>
+      (option?.label || '').toLowerCase().includes(input.toLowerCase())
+    }
+  >
+    {options.map((option, index) => (
+      <Select.Option key={index} value={option.value}>
+        {option.label}
+      </Select.Option>
+    ))}
+  </Select>
+);
 
-const PrintPage = ({clickOutside}) => {
+const PrintPage = ({ clickOutside }) => {
+  const [fileName, setFileName] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [printers, setPrinters] = useState([]);
+  const [selectedPrinter, setSelectedPrinter] = useState(null);
+  const [copies, setCopies] = useState(1);
+  const [printSides, setPrintSides] = useState("one-sided");
+  const [pageSize, setPageSize] = useState("A4");
+  const [userId, setUserId] = useState(null);
   const [showSuccessCard, setShowSuccessCard] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [printAll, setPrintAll] = useState(true);
-  const [username, setUsername] = useState(null);
+  const navigate = useNavigate();
 
-  const handleFileUpload = (filePath) => {
-    setErrorMessage(null); 
-  };
-
-  const onLoadError = (error) => {
-    console.error('Error loading PDF:', error);
-    setErrorMessage('There was an issue loading the PDF. Please try again.');
-  };
-
-  const handlePrintOptionChange = (value) => {
-    setPrintAll(value === "In tất cả");
-  };
   useEffect(() => {
-    fetch("/user.json")
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUserId(parsedUser.id);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/printers")
       .then((response) => response.json())
       .then((data) => {
-        if (data.length > 0) {
-          setUsername(data[0]);
+        if (data) {
+          setPrinters(data.map(printer => ({ value: printer.printer_id, label: `${printer.brand} ${printer.model}` })));
         }
       })
-      .catch((error) => console.error("Error fetching username", error));
+      .catch((error) => console.error("Error fetching printers", error));
   }, []);
+
+  const handleFileUpload = (fileURL, fileName) => {
+    setPreviewUrl(fileURL);
+    setFileName(fileName);
+  };
+
+  const handlePrintJob = async () => {
+    if (!selectedPrinter || !fileName || !userId) {
+      setErrorMessage("Please ensure all fields are filled");
+      return;
+    }
+
+    const printJobData = {
+      user_id: userId,
+      printer_id: selectedPrinter,
+      file_name: fileName,
+      page_size: pageSize,
+      sides: printSides,
+      copies,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/users/print", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(printJobData),
+      });
+
+      if (response.ok) {
+
+        setShowSuccessCard(true);
+        setErrorMessage(null);
+        navigate('/hist-page')
+      } else {
+        const result = await response.json();
+        setErrorMessage(result.message || "Print job failed");
+      }
+    } catch (error) {
+      setErrorMessage("Error creating print job");
+    }
+  };
+
+  const handleReset = () => {
+    setFileName(null);
+    setPreviewUrl(null);
+    setSelectedPrinter(null);
+    setCopies(1);
+    setPrintSides("one-sided");
+    setPageSize("A4");
+    setErrorMessage(null);
+    setShowSuccessCard(false);
+  };
+
   return (
     <div onClick={clickOutside} className={styles.container}>
       <div className={styles.back}>
         <div className={styles.print_box}>
           <DragBox onFileUpload={handleFileUpload} />
+          {previewUrl && (
+            <div className={styles.preview}>
+              <iframe src={previewUrl} title="PDF Preview" width="100%" height="400px"></iframe>
+            </div>
+          )}
+
           <div className={styles.option}>
             <div className={styles.content}>
               <div className={styles.left}>
-                <p>Printer: <SelectBox options={["B4", "H6"]} holder={"Vị trí"} /></p>
-                <p>Số trang in: <SelectBox
-                    options={["In tất cả", "Chọn số trang"]}
-                    holder={"Chọn số trang"}
-                    onChange={handlePrintOptionChange}
-                  /> <br/>
-                  <InputBox disabled={printAll} style={{width:"100%"}} holder={"e.g 1-5,8,11-13"} />
-                </p>
-                <p>Số trang mỗi mặt: <SelectBox options={["1","2"]}/></p>
-                {username && <p>Số trang còn lại: {username.pages}</p>}
+                <p>Printer: <SelectBox options={printers} holder={"Select Printer"} onChange={setSelectedPrinter} /></p>
+                <p>Page Size: <SelectBox options={[{ value: "A4", label: "A4" }, { value: "A3", label: "A3" }]} holder={"Select Page Size"} onChange={setPageSize} /></p>
+                <p>Print Sides: <SelectBox options={[{ value: "one-sided", label: "One-Sided" }, { value: "double-sided", label: "Double-Sided" }]} holder={"Select Print Sides"} onChange={setPrintSides} /></p>
               </div>
               <div className={styles.right}>
-                <p>Số bản in: <InputBox /></p>
-                <p>Tỉ lệ: <SelectBox options={["100%","125%","150%","200%"]} holder={"Tỉ lệ"}/> </p>
-                <p>Hướng giấy: <SelectBox options={["Dọc","Ngang"]} holder={"Hướng giấy"}/></p>
-                <p>Chế độ màu: <SelectBox options={["Trắng đen"]} holder={"Chọn chế độ"}/></p>
+                <p>Copies: <InputBox onChange={setCopies} style={{ width: "100%" }} holder={"Number of Copies"} /></p>
+                {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                <button onClick={handlePrintJob}><img src={print} alt='' /> Print</button>
               </div>
             </div>
-            <button onClick={() => setShowSuccessCard(true)} ><img src={print} alt=''></img></button>
           </div>
-          <div className={`${styles.overlay} ${showSuccessCard ? styles.show : ''}`} onClick={() => setShowSuccessCard(false)}></div>
-          <div className={`${styles.success_card} ${showSuccessCard ? styles.show : ''}`}>
-            <div className={styles.popCard}>
-              <span class="material-symbols-outlined">check_circle</span>
-              <p>Process Successfully</p>
-              <button onClick={() => {setShowSuccessCard(false); window.location.reload();}}>Close</button>  
+
+          {showSuccessCard && (
+            <div className={`${styles.overlay} ${styles.show}`} onClick={handleReset}>
+              <div className={styles.success_card}>
+                <div className={styles.popCard}>
+                  <span className="material-symbols-outlined">check_circle</span>
+                  <p>Print Job Created Successfully</p>
+                  <button onClick={handleReset}>Close</button>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

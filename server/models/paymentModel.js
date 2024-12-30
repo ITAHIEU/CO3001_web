@@ -1,3 +1,4 @@
+
 const db = require('../database/dbinfo'); // Kết nối với cơ sở dữ liệu
 
 class Payment {
@@ -56,6 +57,24 @@ class Payment {
             throw error;
         }
     };
+    create = async (userId, amountPaid, pagesBought, paymentMethod) => {
+        try {
+          // Thực hiện giao dịch để đảm bảo tính toàn vẹn dữ liệu
+    
+          // Thêm bản ghi thanh toán vào bảng `Payments`
+          const insertPaymentQuery = `
+            INSERT INTO Payments (user_id, amount_paid, pages_bought, payment_method)
+            VALUES (?, ?, ?, ?)
+          `;
+          await db.query(insertPaymentQuery, [userId, amountPaid, pagesBought, paymentMethod]);
+    
+          // Cập nhật số trang của người dùng trong bảng `Users
+        } catch (error) {
+          // Rollback giao dịch nếu có lỗi
+          console.error('Error creating payment:', error.message);
+          throw new Error('Could not create payment.');
+        }
+      };
 }
 
 module.exports = new Payment();

@@ -1,4 +1,6 @@
 const UserModel = require('../models/AdminModels'); // Đảm bảo import đúng model
+const PrintJobModel = require('../models/printJob');
+const Printer = require('../models/printerModel');
 
 class UserController {
     // Đăng nhập
@@ -31,6 +33,15 @@ class UserController {
         // Xử lý đăng xuất, ví dụ xóa cookie, session, token,...
         res.status(200).json({ message: 'Logged out successfully' });
     };
+    getPrinterById= async (req, res) => {
+        const { userId } = req.params;
+        try {
+          const printerJob = await PrintJobModel.getById(userId);
+          res.status(200).json(printerJob);
+        } catch (error) {
+          res.status(500).json({ message: `Error fetching printerJob by ${userId}`, error });
+        }
+      };
 
 }
 

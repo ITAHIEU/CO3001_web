@@ -17,6 +17,7 @@ import UserLoginHomePage from "./pages/User/login/Homepage.jsx";
 import AdminLoginPage from "./pages/Admin/login/Loginpage.jsx";
 import UserLoginPage from "./pages/User/login/Loginpage.jsx";
 import styles from "./App.module.css"
+import RechargePage from "./pages/User/ProfilePage/RechargeBalance.jsx";
 const App = () => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const toggleDropdown = () =>{
@@ -31,7 +32,7 @@ const App = () => {
             {isDropdownVisible && <div className={styles.dropdown_container}>
                 <ul className={styles.dropdown_contents}>
                     <Link to="/profile-page" className={styles.link} onClick={clickOutside}><li>Hồ sơ</li></Link>                    
-                    <li>Nạp tiền </li>
+                    <Link to="/recharge" className={styles.link} onClick={clickOutside}><li>Thêm Page</li></Link>
                     <Link to="/" className={styles.link} onClick={clickOutside}><li>Đăng xuất</li></Link>
                 </ul>
             </div>}
@@ -49,6 +50,8 @@ const App = () => {
                 <Route path="/print-page" element={<><UserHeader onToggleDropdown={toggleDropdown} activeIndex={1}/><PrintPage clickOutside={clickOutside}/></>}/>
                 <Route path="/hist-page" element={<><UserHeader onToggleDropdown={toggleDropdown} activeIndex={2}/><HistPage clickOutside={clickOutside}/></>}/>
                 <Route path="/profile-page" element={<><UserHeader onToggleDropdown={toggleDropdown}/><Profile clickOutside={clickOutside}/></>}/>
+                <Route path="/recharge" element={<><UserHeader onToggleDropdown={toggleDropdown}/><RechargePage  clickOutside={clickOutside}/></>}/>
+
             </Routes>
             <Footer />
         </div>

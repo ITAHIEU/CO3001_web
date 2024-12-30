@@ -7,16 +7,18 @@ const { Dragger } = Upload;
 
 const DragBox = ({ onFileUpload }) => {
   const uploadProps = {
-    name: 'file',  // Ensure the 'name' is correct (this should match the multer field)
-    multiple: false,  
-    action: 'http://localhost:5000/upload',  // Make sure this URL is correct for your server
+    name: 'file', // Tên trường khớp với định nghĩa của server
+    multiple: false,
+    action: 'http://localhost:5000/file/upload', // URL API tải file
+    accept: '.pdf', // Chỉ cho phép file PDF
     onChange: (info) => {
-      const { status } = info.file;
+      const { status, response } = info.file;
       if (status === 'done') {
         message.success(`${info.file.name} uploaded successfully.`);
-        if (onFileUpload) {
-          const fileURL = `http://localhost:5000/${info.file.response.file.path}`;
-          onFileUpload(fileURL);  
+        if (onFileUpload && response) {
+          // Lấy filename từ response và gửi callback
+          const fileURL = `http://localhost:5000/uploads/${info.file.response.file.filename}`;
+          onFileUpload(fileURL, info.file.response.file.filename); // Truyền cả URL và filename
         }
       } else if (status === 'error') {
         message.error(`${info.file.name} upload failed.`);
@@ -25,10 +27,6 @@ const DragBox = ({ onFileUpload }) => {
     onDrop: (e) => {
       console.log('Dropped files', e.dataTransfer.files);
     },
-    headers: {
-      // If required, add authorization or custom headers here
-      'Authorization': 'Bearer <token>',
-    },
   };
 
   return (
@@ -36,9 +34,9 @@ const DragBox = ({ onFileUpload }) => {
       <p className="ant-upload-drag-icon">
         <InboxOutlined />
       </p>
-      <p className="ant-upload-text">Click or drag file to this area to upload</p>
+      <p className="ant-upload-text">Click hoặc kéo file vào đây để tải lên</p>
       <p className="ant-upload-hint">
-        Support for a single file upload. Images and documents are allowed.
+        Hỗ trợ tải lên file PDF. Kích thước tối đa: 10MB.
       </p>
     </Dragger>
   );

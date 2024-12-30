@@ -228,12 +228,12 @@ const UserManagement = () => {
                             Edit
                           </button>
                         )}
-                        <button
+                        {/* <button
                           className={styles.remove}
                           onClick={() => handleRemove(user.user_id)}
                         >
                           Remove
-                        </button>
+                        </button> */}
                       </td>
                     </tr>
                   ))

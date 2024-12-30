@@ -23,7 +23,7 @@ const userController = {
     const { pagesBought, paymentMethod } = req.body;
     const {userId} = req.params;
     try {
-      const [user] = await User.getById(userId);
+      const user = await User.getById(userId);
       if (!user.length) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -31,7 +31,6 @@ const userController = {
       const costPerPage = 0.1; // Giá mỗi trang in
       const amountPaid = pagesBought * costPerPage;
       const newBalance = user[0].balance + pagesBought;
-      
       await User.updateBalance(userId, newBalance);
       await Payment.create(userId, amountPaid, pagesBought, paymentMethod);
 

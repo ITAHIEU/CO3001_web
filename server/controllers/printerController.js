@@ -10,6 +10,15 @@ const printerController = {
       res.status(500).json({ message: 'Error fetching printers', error });
     }
   },
+  getPrinterById: async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const printer = await Printer.getById(userId);
+      res.status(200).json(printer);
+    } catch (error) {
+      res.status(500).json({ message: `Error fetching printer by ${userId}`, error });
+    }
+  },
   createPrinter: async (req, res) => {
     const { brand, model, description, campus_name, building_name, room_number, status } = req.body;
     try {
@@ -29,7 +38,7 @@ const printerController = {
       res.status(500).json({ message: 'Error updating printer status', error });
     }
   },
-  updatePrinter : async (req, res) => {
+  updatePrinter: async (req, res) => {
     const { printerId } = req.params;
     const { brand, model, description, campus_name, building_name, room_number, status } = req.body;
     try {
@@ -48,7 +57,7 @@ const printerController = {
     }
   },
 
-  deletePrinter : async (req, res) => {
+  deletePrinter: async (req, res) => {
     const { printerId } = req.params;
     try {
       const query = `
@@ -63,7 +72,7 @@ const printerController = {
       res.status(500).json({ error: 'Error deleting printer', details: error.message });
     }
   },
-  
+
 };
 
 module.exports = printerController;
