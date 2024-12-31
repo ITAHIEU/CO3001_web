@@ -77,7 +77,7 @@ const AdminLoginPage = () => {
               label="Login"
               onClick={handleLogin}
               className="LoginButton primary"
-              path={'/Ad-main-page'}
+              // path={'/Ad-main-page'}
             />
             <LoginBtn
               label="Clear all"

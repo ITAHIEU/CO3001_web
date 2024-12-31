@@ -20,13 +20,11 @@ const RechargePage = () => {
             pagesBought: rechargeAmount,
         };
         try {
-            console.log(rechargeData);
             const response = await fetch(`http://localhost:5000/users/${user.id}/buy`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(rechargeData),
             });
-            console.log(user.id)
             if (response.ok) {
                 const result = await response.json();
                 const updatedUser = { ...user, balance: result.newBalance };

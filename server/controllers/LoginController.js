@@ -8,7 +8,6 @@ class UserController {
         const { email, password } = req.body;
         try {
             // Gọi model để lấy người dùng và so sánh mật khẩu
-            console.log({email, password});
             const user = await UserModel.getUserByEmailAndRole(email, password, 'student');
 
             // Nếu đăng nhập thành công, trả về thông tin người dùng

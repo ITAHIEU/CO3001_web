@@ -28,10 +28,11 @@ const createPrintJob = async (req, res) => {
     }
 
     // Kiểm tra người dùng
-    const user = await UserModel.getById(user_id);
-    if (!user) {
+    const userData = await UserModel.getById(user_id);
+    if (!userData) {
       return res.status(404).json({ error: 'User not found' });
     }
+    const user = userData[0];
 
     // Kiểm tra máy in
     const printer = await PrinterModel.getById(printer_id);
@@ -52,23 +53,10 @@ const createPrintJob = async (req, res) => {
     if (user.balance < total_pages) {
       return res.status(400).json({ error: 'Insufficient balance' });
     }
-
-    console.log({
-      user_id,
-      user  
-    })
+    const cost= user.balance - total_pages
     // Cập nhật số dư người dùng
     await UserModel.updateBalance(user_id, user.balance - total_pages);
 
-    console.log({
-      user_id,
-      printer_id,
-      file_name,
-      page_count_a4,
-      page_count_a3,
-      sides,
-      copies,
-    });
     
     // Tạo print job
     await PrintJobModel.create({

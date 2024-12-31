@@ -52,8 +52,11 @@ const PrintPage = ({ clickOutside }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          setPrinters(data.map(printer => ({ value: printer.printer_id, label: `${printer.brand} ${printer.model}` })));
-        }
+          setPrinters(
+            data
+              .filter(printer => printer.status === "enabled")
+              .map(printer => ({ value: printer.printer_id, label: `${printer.brand} ${printer.model}` }))
+          );        }
       })
       .catch((error) => console.error("Error fetching printers", error));
   }, []);
@@ -77,8 +80,8 @@ const PrintPage = ({ clickOutside }) => {
       sides: printSides,
       copies,
     };
-
     try {
+      console.log(printJobData);
       const response = await fetch("http://localhost:5000/users/print", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
