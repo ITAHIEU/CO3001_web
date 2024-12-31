@@ -18,9 +18,9 @@ system, ensuring secure access.
 
 # Technology stack
 
-- Front_end: reactjs ??
-- Back_end: nodejs ??
-- Database: SQL || mySQL ??
+- Front_end: reactjs 
+- Back_end: nodejs 
+- Database: mySQL
 
 # Drawback
 
@@ -82,7 +82,7 @@ npm start
 
 ```
 
-The application should be starting. The ReactJS application will run on ....
+The application should be starting. The ReactJS application will run on port 3000.
 
 To log in as a student
 - Username: 

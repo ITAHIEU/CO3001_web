@@ -1,12 +1,12 @@
--- Tạo bảng Users
-create database CNPM
+CREATE DATABASE CNPM;
+USE CNPM;
 
-Use CNPM
-
+-- Tạo bảng Users với thuộc tính password
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     email VARCHAR(100) UNIQUE,
+    password VARCHAR(255), -- Thêm cột password
     role ENUM('student', 'SPSO'),
     balance INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -77,17 +77,17 @@ CREATE TABLE Reports (
 );
 
 -- Thêm dữ liệu vào bảng Users
-INSERT INTO Users (name, email, role, balance)
+INSERT INTO Users (name, email, password, role, balance)
 VALUES
-('Nguyen Minh', 'minh.nguyen@hcmut.edu.vn', 'student', 500),
-('Tran Thi Lan', 'lan.tran@hcmut.edu.vn', 'student', 300),
-('SPSO1', 'spos1@hcmut.edu.vn', 'SPSO', 0),
-('Le Van A', 'a.le@hcmut.edu.vn', 'student', 100),
-('Pham Thi B', 'b.pham@hcmut.edu.vn', 'student', 50),
-('Nguyen Hoang', 'hoang.nguyen@hcmut.edu.vn', 'student', 400),
-('Tran Anh Tuan', 'tuan.tran@hcmut.edu.vn', 'student', 200),
-('Le Thi C', 'c.le@hcmut.edu.vn', 'student', 250),
-('SPSO2', 'spos2@hcmut.edu.vn', 'SPSO', 0);
+('Nguyen Minh', 'minh.nguyen@hcmut.edu.vn', '123456', 'student', 500),
+('Tran Thi Lan', 'lan.tran@hcmut.edu.vn', 'password123', 'student', 300),
+('SPSO1', 'spos1@hcmut.edu.vn', 'admin123', 'SPSO', 0),
+('Le Van A', 'a.le@hcmut.edu.vn', 'hello123', 'student', 100),
+('Pham Thi B', 'b.pham@hcmut.edu.vn', 'pham2024', 'student', 50),
+('Nguyen Hoang', 'hoang.nguyen@hcmut.edu.vn', 'nguyenhoang', 'student', 400),
+('Tran Anh Tuan', 'tuan.tran@hcmut.edu.vn', 'anh123', 'student', 200),
+('Le Thi C', 'c.le@hcmut.edu.vn', 'letc2023', 'student', 250),
+('SPSO2', 'spos2@hcmut.edu.vn', 'adminpassword', 'SPSO', 0);
 
 -- Thêm dữ liệu vào bảng Printers
 INSERT INTO Printers (brand, model, description, campus_name, building_name, room_number, status)
@@ -139,10 +139,10 @@ VALUES
 ('monthly', '2024-10-01', '2024-10-31', 150, 20),
 ('yearly', '2023-01-01', '2023-12-31', 4500, 150);
 
+
 SELECT * FROM Users;
 SELECT * FROM Printers;
 SELECT * FROM Print_Jobs;
 SELECT * FROM Configurations;
 SELECT * FROM Payments;
 SELECT * FROM Reports;
-
